@@ -12,13 +12,13 @@
             "flutterMode": "release"
         },
         {
-            "name": "Flutter Dev: Prod",
+            "name": "Flutter Debug: Prod",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart"
         },
         {
-            "name": "Flutter Dev: Local",
+            "name": "Flutter Debug: Local",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.local.dart"

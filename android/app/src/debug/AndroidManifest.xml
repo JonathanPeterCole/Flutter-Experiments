@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.jonathancole.flutterexperiments">
-    <!-- Flutter needs it to communicate with the running application
-         to allow setting breakpoints, to provide hot reload, etc.
-    -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Set a unique label for debug builds -->
+    <application
+        tools:replace="android:label"
+        android:label="Flutter Experiments Dev" />
 </manifest>
