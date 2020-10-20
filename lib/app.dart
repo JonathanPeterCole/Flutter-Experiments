@@ -1,4 +1,4 @@
-import 'package:flutter_experiments/environment/environment.dart';
+import 'package:flutter_experiments/models/environment/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_experiments/theme/custom-theme.dart';
 

@@ -1,3 +1,5 @@
+import 'package:flutter_experiments/models/environment/environment_type.dart';
+
 class Environment {
   /// Holds environment-specific config as set in the environment's main.dart file.
   const Environment({
@@ -9,8 +11,4 @@ class Environment {
   final EnvironmentType environment;
   /// The placeholder API URL.
   final String apiUrl;
-}
-
-enum EnvironmentType {
-  Prod, Local
 }

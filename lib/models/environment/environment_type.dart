@@ -1,0 +1,3 @@
+enum EnvironmentType {
+  Prod, Local
+}
