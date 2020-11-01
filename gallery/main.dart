@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_experiments/models/environment/environment.dart';
 import 'package:flutter_experiments/models/environment/environment_type.dart';
 import 'package:flutter_experiments/theme/custom-theme.dart';
@@ -20,6 +21,10 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+    
     return MaterialApp(
       title: 'Flutter Experiments Gallery',
       theme: CustomTheme.themeLight.materialTheme,
