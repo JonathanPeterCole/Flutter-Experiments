@@ -22,6 +22,12 @@
             "request": "launch",
             "type": "dart",
             "program": "lib/main.local.dart"
+        },
+        {
+            "name": "Flutter Debug: Gallery",
+            "request": "launch",
+            "type": "dart",
+            "program": "gallery/main.dart"
         }
     ]
 }
