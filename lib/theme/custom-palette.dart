@@ -9,6 +9,9 @@ class CustomPalette {
     this.secondary,
     this.background,
     this.surface,
+    this.buttonForeground,
+    this.buttonSplash,
+    this.shadow,
     this.textPrimary,
     this.textSecondary
   });
@@ -18,6 +21,9 @@ class CustomPalette {
   final Color secondary;
   final Color background;
   final Color surface;
+  final Color buttonForeground;
+  final Color buttonSplash;
+  final Color shadow;
   final Color textPrimary;
   final Color textSecondary;
 
@@ -38,6 +44,18 @@ class CustomPalette {
       scaffoldBackgroundColor: this.background,
       canvasColor: this.surface,
       cardColor: this.surface,
+      splashColor: this.primary.withOpacity(0.1),
+      appBarTheme: AppBarTheme(
+        color: this.surface,
+        shadowColor: this.shadow,
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        foregroundColor: this.buttonForeground,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: this.primary,
+        unselectedItemColor: this.textSecondary,
+      ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
       ),
