@@ -20,16 +20,25 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ));
-    
-    return MaterialApp(
-      title: 'Flutter Experiments Gallery',
-      theme: CustomTheme.themeLight.materialTheme,
-      darkTheme: CustomTheme.themeDark.materialTheme,
-      home: GalleryTabsPage(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    title: 'Flutter Experiments Gallery',
+    theme: CustomTheme.themeLight.materialTheme,
+    darkTheme: CustomTheme.themeDark.materialTheme,
+    builder: (context, child) {
+      // Get the platform brightness
+      final Brightness platformBrightness = MediaQuery.platformBrightnessOf(context);
+      // Set transparent status bar
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        child: child,
+        value: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: platformBrightness,
+          statusBarIconBrightness: platformBrightness == Brightness.light
+            ? Brightness.dark
+            : Brightness.light
+        )
+      );
+    },
+    home: GalleryTabsPage(),
+  );
 }

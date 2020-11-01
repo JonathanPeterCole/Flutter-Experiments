@@ -24,6 +24,21 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Experiments',
       theme: CustomTheme.themeLight.materialTheme,
       darkTheme: CustomTheme.themeDark.materialTheme,
+      builder: (context, child) {
+        // Get the platform brightness
+        final Brightness platformBrightness = MediaQuery.platformBrightnessOf(context);
+        // Set transparent status bar
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          child: child,
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarBrightness: platformBrightness,
+            statusBarIconBrightness: platformBrightness == Brightness.light
+              ? Brightness.dark
+              : Brightness.light
+          )
+        );
+      },
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
