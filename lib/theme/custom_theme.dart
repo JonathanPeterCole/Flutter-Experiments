@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_experiments/theme/custom-palette.dart';
+import 'package:flutter_experiments/theme/custom_palette.dart';
 
 /// Custom theme manager to create the custom light and dark themes.
 class CustomTheme {

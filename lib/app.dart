@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_experiments/models/environment/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_experiments/screens/home_screen.dart';
-import 'package:flutter_experiments/theme/custom-theme.dart';
+import 'package:flutter_experiments/theme/custom_theme.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init(Environment env) async {
