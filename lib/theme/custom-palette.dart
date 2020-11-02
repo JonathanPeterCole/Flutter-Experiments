@@ -31,6 +31,7 @@ class CustomPalette {
   ThemeData get materialTheme {
     // Get the default color scheme based on the brightness
     ColorScheme defaultColorScheme = brightness == Brightness.light ? ColorScheme.light() : ColorScheme.dark();
+    ThemeData defaultThemeData = brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
     // Create the theme data
     return ThemeData(
       brightness: brightness,
@@ -45,9 +46,14 @@ class CustomPalette {
       canvasColor: this.surface,
       cardColor: this.surface,
       splashColor: this.primary.withOpacity(0.1),
+      primaryTextTheme: defaultThemeData.textTheme.apply(
+        bodyColor: this.textPrimary,
+        displayColor: this.textPrimary,
+      ),
       appBarTheme: AppBarTheme(
         color: this.surface,
         shadowColor: this.shadow,
+        brightness: this.brightness,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         foregroundColor: this.buttonForeground,

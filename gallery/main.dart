@@ -14,6 +14,12 @@ Future<void> main() async {
     environment: EnvironmentType.Local
   ));
 
+  // Set transparent status bar (the overlay style is also set when the app rebuilds, but using an
+  // AppBar seems to override the status bar color unless it is also set here)
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
+
   // Start the app
   runApp(MyApp());
 }
@@ -27,16 +33,19 @@ class MyApp extends StatelessWidget {
     builder: (context, child) {
       // Get the platform brightness
       final Brightness platformBrightness = MediaQuery.platformBrightnessOf(context);
-      // Set transparent status bar
+      final Brightness inverseBrightness = platformBrightness == Brightness.light
+          ? Brightness.dark
+          : Brightness.light;
+      // Set the overlay styles
       return AnnotatedRegion<SystemUiOverlayStyle>(
         child: child,
         value: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: platformBrightness,
-          statusBarIconBrightness: platformBrightness == Brightness.light
-            ? Brightness.dark
-            : Brightness.light
-        )
+          statusBarIconBrightness: inverseBrightness,
+          systemNavigationBarColor: CustomTheme.brightness(platformBrightness).surface,
+          systemNavigationBarIconBrightness: inverseBrightness
+        ),
       );
     },
     home: GalleryTabsPage(),

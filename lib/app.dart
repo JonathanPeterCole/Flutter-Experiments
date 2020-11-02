@@ -5,9 +5,15 @@ import 'package:flutter_experiments/theme/custom-theme.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init(Environment env) async {
-    // Prepare GetIt service locator
+  // Prepare GetIt service locator
   final getIt = GetIt.instance;
   getIt.registerSingleton<Environment>(env);
+
+  // Set transparent status bar (the overlay style is also set when the app rebuilds, but using an
+  // AppBar seems to override the status bar color unless it is also set here)
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
 
   // Start the app
   runApp(MyApp());
@@ -16,10 +22,6 @@ Future<void> init(Environment env) async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ));
-
     return MaterialApp(
       title: 'Flutter Experiments',
       theme: CustomTheme.themeLight.materialTheme,
@@ -27,16 +29,19 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         // Get the platform brightness
         final Brightness platformBrightness = MediaQuery.platformBrightnessOf(context);
-        // Set transparent status bar
+        final Brightness inverseBrightness = platformBrightness == Brightness.light
+            ? Brightness.dark
+            : Brightness.light;
+        // Set the overlay styles
         return AnnotatedRegion<SystemUiOverlayStyle>(
           child: child,
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarBrightness: platformBrightness,
-            statusBarIconBrightness: platformBrightness == Brightness.light
-              ? Brightness.dark
-              : Brightness.light
-          )
+            statusBarIconBrightness: inverseBrightness,
+            systemNavigationBarColor: CustomTheme.brightness(platformBrightness).surface,
+            systemNavigationBarIconBrightness: inverseBrightness
+          ),
         );
       },
       home: MyHomePage(title: 'Flutter Demo Home Page'),
