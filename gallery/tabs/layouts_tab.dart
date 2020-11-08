@@ -7,10 +7,12 @@ class LayoutsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListView(
     children: [
-      ListTile(
-        title: Text('FadingSliverAppBar',
-          style: Theme.of(context).textTheme.subtitle2,
+      SizedBox(height: 6),
+      Padding(
+        child: Text('FADING SLIVER APP BAR',
+          style: Theme.of(context).textTheme.overline,
         ),
+        padding: EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
       ),
       ListTile(
         leading: Icon(Icons.link),
