@@ -10,10 +10,12 @@ class CustomPalette {
     this.background,
     this.surface,
     this.buttonForeground,
-    this.buttonSplash,
+    this.splash,
+    this.highlight,
     this.shadow,
     this.textPrimary,
-    this.textSecondary
+    this.textSecondary,
+    this.divider,
   });
 
   final Brightness brightness;
@@ -22,10 +24,12 @@ class CustomPalette {
   final Color background;
   final Color surface;
   final Color buttonForeground;
-  final Color buttonSplash;
+  final Color splash;
+  final Color highlight;
   final Color shadow;
   final Color textPrimary;
   final Color textSecondary;
+  final Color divider;
 
   /// Generate a material theme from the palette
   ThemeData get materialTheme {
@@ -39,33 +43,48 @@ class CustomPalette {
         primary: this.primary,
         secondary: this.secondary,
         background: this.background,
-        surface: this.surface
+        surface: this.surface,
       ),
       primaryColor: this.primary,
+      accentColor: this.secondary,
       scaffoldBackgroundColor: this.background,
       canvasColor: this.surface,
       cardColor: this.surface,
-      splashColor: this.primary.withOpacity(0.1),
+      dividerColor: this.divider,
+      // Inkwell Theming
+      splashFactory: InkRipple.splashFactory,
+      splashColor: this.splash,
+      highlightColor: this.highlight,
+      // Text Theming
       primaryTextTheme: defaultThemeData.textTheme.apply(
         bodyColor: this.textPrimary,
         displayColor: this.textPrimary,
       ),
+      // AppBar Theming
       appBarTheme: AppBarTheme(
         color: this.surface,
         shadowColor: this.shadow,
         brightness: this.brightness,
+        iconTheme: IconThemeData(
+          color: this.textPrimary
+        ),
+        actionsIconTheme: IconThemeData(
+          color: this.textPrimary
+        )
       ),
+      // FAB Theming
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         foregroundColor: this.buttonForeground,
       ),
+      // Bottom Nav Theming
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedItemColor: this.primary,
         unselectedItemColor: this.textSecondary,
       ),
+      // Snackbar Theming
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
       ),
-      splashFactory: InkRipple.splashFactory
     );
   }
 }
