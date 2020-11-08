@@ -46,10 +46,11 @@ class _GalleryTabsPageState extends State<GalleryTabsPage> {
       index: _selectedTab,
       children: _screens,
       reverse: _reverse,
-      transitionBuilder: (child, animation, secondaryAnimation) => FadeThroughTransition(
+      transitionBuilder: (child, animation, secondaryAnimation) => SharedAxisTransition(
         child: child,
         animation: animation,
         secondaryAnimation: secondaryAnimation,
+        transitionType: SharedAxisTransitionType.horizontal,
         fillColor: Colors.transparent,
       ),
     ),
