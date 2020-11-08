@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/widgets/common/animation/indexed_transition_switcher.dart';
 
+import 'tabs/components_tab.dart';
+import 'tabs/layouts_tab.dart';
+import 'tabs/screens_tab.dart';
+
 class GalleryTabsPage extends StatefulWidget {
   @override
   _GalleryTabsPageState createState() => _GalleryTabsPageState();
@@ -12,6 +16,7 @@ class _GalleryTabsPageState extends State<GalleryTabsPage> {
 
   int _selectedTab;
   bool _reverse;
+  List<String> _titles;
   List<Widget> _screens;
 
   @override
@@ -19,35 +24,34 @@ class _GalleryTabsPageState extends State<GalleryTabsPage> {
     super.initState();
     _selectedTab = 0;
     _reverse = false;
+    _titles = <String>[
+      'Components',
+      'Layouts',
+      'Screens'
+    ];
     _screens = <Widget>[
-      Container(
-        alignment: Alignment.center,
-        child: Text('Components')
-      ),
-      Container(
-        alignment: Alignment.center,
-        child: Text('Layouts')
-      ),
-      Container(
-        alignment: Alignment.center,
-        child: Text('Screens')
-      ),
+      ComponentsTab(),
+      LayoutsTab(),
+      ScreensTab(),
     ];
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(
+      title: Text(_titles[_selectedTab]),
+      centerTitle: true,
+    ),
     body: IndexedTransitionSwitcher(
       index: _selectedTab,
       children: _screens,
       reverse: _reverse,
-      transitionBuilder: (child, animation, secondaryAnimation) => SharedAxisTransition(
+      transitionBuilder: (child, animation, secondaryAnimation) => FadeThroughTransition(
         child: child,
         animation: animation,
         secondaryAnimation: secondaryAnimation,
-        transitionType: SharedAxisTransitionType.horizontal,
         fillColor: Colors.transparent,
-      )
+      ),
     ),
     bottomNavigationBar: BottomNavigationBar(
       currentIndex: _selectedTab,
