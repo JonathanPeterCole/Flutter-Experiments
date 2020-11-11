@@ -15,6 +15,7 @@ class CustomTheme {
     textPrimary: Color.fromRGBO(12, 18, 26, 1),
     textSecondary: Color.fromRGBO(120, 125, 135, 1),
     divider:  Color.fromRGBO(0, 0, 0, 0.3),
+    danger: Color.fromRGBO(210, 65, 65, 1),
   );
   static const CustomPalette themeDark = CustomPalette(Brightness.dark,
     primary: Color.fromRGBO(104, 124, 255, 1),
@@ -28,6 +29,7 @@ class CustomTheme {
     textPrimary: Color.fromRGBO(255, 255, 255, 1),
     textSecondary: Color.fromRGBO(120, 125, 135, 1),
     divider:  Color.fromRGBO(255, 255, 255, 0.3),
+    danger: Color.fromRGBO(210, 65, 65, 1),
   );
 
   /// Get the custom theme based on the context theme brightness

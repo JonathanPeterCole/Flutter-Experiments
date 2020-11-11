@@ -16,6 +16,7 @@ class CustomPalette {
     this.textPrimary,
     this.textSecondary,
     this.divider,
+    this.danger,
   });
 
   final Brightness brightness;
@@ -30,6 +31,7 @@ class CustomPalette {
   final Color textPrimary;
   final Color textSecondary;
   final Color divider;
+  final Color danger;
 
   /// Generate a material theme from the palette
   ThemeData get materialTheme {
@@ -51,10 +53,14 @@ class CustomPalette {
       canvasColor: this.surface,
       cardColor: this.surface,
       dividerColor: this.divider,
-      // Inkwell Theming
+      // Inkwell & Button Theming
       splashFactory: InkRipple.splashFactory,
       splashColor: this.splash,
       highlightColor: this.highlight,
+      buttonColor: this.primary,
+      buttonTheme: ButtonThemeData(
+        textTheme: ButtonTextTheme.primary
+      ),
       // Text Theming
       primaryTextTheme: defaultThemeData.textTheme.apply(
         bodyColor: this.textPrimary,

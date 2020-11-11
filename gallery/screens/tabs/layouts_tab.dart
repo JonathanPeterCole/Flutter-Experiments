@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../screens/layout_demos/fading_sliver_app_bar_demo.dart';
+import '../layout_demos/fading_sliver_app_bar_demo.dart';
 
 class LayoutsTab extends StatelessWidget {
   @override
