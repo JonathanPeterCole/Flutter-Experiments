@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,7 +24,7 @@ class PlatformButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get the button color
     Color buttonColor = danger ? CustomTheme.of(context).danger : CustomTheme.of(context).primary;
-    Color buttonForegroundColor = CustomTheme.of(context).buttonForeground;
+    Color buttonForegroundColor = CustomTheme.of(context).onPrimary;
     bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
     // Get the appropriate button
     if (isAndroid) {

@@ -24,10 +24,24 @@
             "program": "lib/main.local.dart"
         },
         {
-            "name": "Flutter Debug: Gallery",
+            "name": "Flutter Debug: Gallery (Android)",
             "request": "launch",
             "type": "dart",
-            "program": "gallery/main.dart"
+            "program": "gallery/main.dart",
+            "args": [
+                "--dart-define",
+                "TARGET_PLATFORM=ANDROID"
+            ]
+        },
+        {
+            "name": "Flutter Debug: Gallery (iOS)",
+            "request": "launch",
+            "type": "dart",
+            "program": "gallery/main.dart",
+            "args": [
+                "--dart-define",
+                "TARGET_PLATFORM=IOS"
+            ]
         }
     ]
 }

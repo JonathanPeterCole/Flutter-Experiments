@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_experiments/models/environment/environment.dart';
 import 'package:flutter_experiments/models/environment/environment_type.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
+import 'package:flutter_experiments/theme/custom_theme_data.dart';
 import 'package:get_it/get_it.dart';
 
 import 'screens/home.dart';
@@ -21,36 +21,35 @@ Future<void> init() async {
     statusBarColor: Colors.transparent,
   ));
 
-  debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-
   // Start the app
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: 'Flutter Experiments Gallery',
-    theme: CustomTheme.themeLight.materialTheme,
-    darkTheme: CustomTheme.themeDark.materialTheme,
-    builder: (context, child) {
-      // Get the platform brightness
-      final Brightness platformBrightness = MediaQuery.platformBrightnessOf(context);
-      final Brightness inverseBrightness = platformBrightness == Brightness.light
-          ? Brightness.dark
-          : Brightness.light;
-      // Set the overlay styles
-      return AnnotatedRegion<SystemUiOverlayStyle>(
-        child: child,
-        value: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: platformBrightness,
-          statusBarIconBrightness: inverseBrightness,
-          systemNavigationBarColor: CustomTheme.brightness(platformBrightness).surface,
-          systemNavigationBarIconBrightness: inverseBrightness
-        ),
-      );
-    },
-    home: GalleryTabsPage(),
+  Widget build(BuildContext context) => CustomTheme(
+    child: MaterialApp(
+      title: 'Flutter Experiments Gallery',
+      theme: const CustomThemeData.light().materialTheme,
+      darkTheme: const CustomThemeData.dark().materialTheme,
+      builder: (context, child) {
+        // Get the platform brightness
+        final Brightness brightness = CustomTheme.of(context).brightness;
+        final Brightness inverseBrightness = brightness == Brightness.light
+            ? Brightness.dark
+            : Brightness.light;
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          child: child,
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarBrightness: brightness,
+            statusBarIconBrightness: inverseBrightness,
+            systemNavigationBarColor: CustomTheme.of(context).surface,
+            systemNavigationBarIconBrightness: inverseBrightness
+          ),
+        );
+      },
+      home: GalleryTabsPage(),
+    ),
   );
 }

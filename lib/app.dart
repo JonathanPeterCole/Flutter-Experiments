@@ -3,6 +3,7 @@ import 'package:flutter_experiments/models/environment/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_experiments/screens/home_screen.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
+import 'package:flutter_experiments/theme/custom_theme_data.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init(Environment env) async {
@@ -22,30 +23,29 @@ Future<void> init(Environment env) async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) => CustomTheme(
+    child: MaterialApp(
       title: 'Flutter Experiments',
-      theme: CustomTheme.themeLight.materialTheme,
-      darkTheme: CustomTheme.themeDark.materialTheme,
+      theme: const CustomThemeData.light().materialTheme,
+      darkTheme: const CustomThemeData.dark().materialTheme,
       builder: (context, child) {
         // Get the platform brightness
-        final Brightness platformBrightness = MediaQuery.platformBrightnessOf(context);
-        final Brightness inverseBrightness = platformBrightness == Brightness.light
+        final Brightness brightness = CustomTheme.of(context).brightness;
+        final Brightness inverseBrightness = brightness == Brightness.light
             ? Brightness.dark
             : Brightness.light;
-        // Set the overlay styles
         return AnnotatedRegion<SystemUiOverlayStyle>(
           child: child,
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
-            statusBarBrightness: platformBrightness,
+            statusBarBrightness: brightness,
             statusBarIconBrightness: inverseBrightness,
-            systemNavigationBarColor: CustomTheme.brightness(platformBrightness).surface,
+            systemNavigationBarColor: CustomTheme.of(context).surface,
             systemNavigationBarIconBrightness: inverseBrightness
           ),
         );
       },
       home: HomeScreen(title: 'Flutter Experiments'),
-    );
-  }
+    ),
+  );
 }
