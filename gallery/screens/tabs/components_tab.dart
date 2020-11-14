@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_experiments/widgets/common/navigation/buttons/platform_button.dart';
+import 'package:flutter_experiments/widgets/common/controls/buttons/platform_button.dart';
 
 class ComponentsTab extends StatelessWidget {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_experiments/widgets/common/navigation/app_bars/fading_sliver_app_bar.dart';
+import 'package:flutter_experiments/widgets/common/bars/fading_sliver_app_bar.dart';
 
 class FadingSliverAppBarDemoScreen extends StatelessWidget {
 
