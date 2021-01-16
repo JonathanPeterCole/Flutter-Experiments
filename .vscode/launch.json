@@ -8,20 +8,21 @@
             "name": "Flutter Release",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart",
             "flutterMode": "release"
         },
         {
             "name": "Flutter Debug: Prod",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart"
         },
         {
             "name": "Flutter Debug: Local",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.local.dart"
+            "args": [
+                "--dart-define",
+                "API_URL=https://localhost:1000/"
+            ]
         },
         {
             "name": "Flutter Debug: Gallery (Android)",

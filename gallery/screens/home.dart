@@ -39,6 +39,7 @@ class _GalleryTabsPageState extends State<GalleryTabsPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    extendBodyBehindAppBar: true,
     appBar: PlatformAppBar(
       context,
       title: Text(_titles[_selectedTab]),
