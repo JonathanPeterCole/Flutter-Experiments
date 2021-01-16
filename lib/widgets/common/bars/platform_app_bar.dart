@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
 
+/// A custom AppBar that adapts to the platform.
+/// 
+/// Displays a Material AppBar on Android, and a CupertinoNavigationBar on iOS.
 class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   PlatformAppBar(BuildContext context, {

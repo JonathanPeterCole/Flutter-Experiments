@@ -211,10 +211,7 @@ class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProv
   );
 }
 
-/// A SliverPersistentHeaderDelegate for displaying the AppBar as a sliver.  
-/// 
-/// To avoid rebuilding the AppBar during animation, the animation is applied to a Material widget,
-/// and the AppBar is passed through the AnimationBuilder as the child.
+/// A SliverPersistentHeaderDelegate for displaying the AppBar as a sliver.
 class _FadingSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   _FadingSliverAppBarDelegate({
