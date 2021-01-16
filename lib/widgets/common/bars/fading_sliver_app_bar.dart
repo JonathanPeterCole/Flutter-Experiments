@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_experiments/theme/custom_theme.dart';
 import 'package:flutter_experiments/widgets/common/animation/toggle_animation_builder.dart';
 
 /// A custom Sliver AppBar that blends in with the page background until the user scrolls.
@@ -28,26 +30,21 @@ import 'package:flutter_experiments/widgets/common/animation/toggle_animation_bu
 /// ```
 class FadingSliverAppBar extends StatefulWidget {
 
-  FadingSliverAppBar({
+  FadingSliverAppBar(BuildContext context, {
     Key key,
     this.pinned = false,
     this.scrollController,
-    this.backgroundColor,
-    this.elevatedBackgroundColor,
-    this.shadowColor,
-    this.leading,
     this.title,
     this.actions,
-    this.bottom,
-    this.brightness,
-    this.iconTheme,
-    this.actionsIconTheme,
-    this.textTheme,
-    this.centerTitle
+    this.backgroundColor,
+    this.elevatedBackgroundColor,
+    this.backButtonText,
+    this.centerTitle,
   }) : assert(
          !pinned || scrollController != null, 
          'If the AppBar is pinned, a scroll controller must be provided.'
        ),
+       platform = Theme.of(context).platform,
        super(key: key);
 
   /// Whether or not the AppBar should stay fixed to the top of the screen or hide when scrolling.
@@ -61,41 +58,28 @@ class FadingSliverAppBar extends StatefulWidget {
   /// If the AppBar is pinned, the scroll controller is used to determine if the user has scrolled.
   final ScrollController scrollController;
 
-  /// The background color to use when the AppBar is not overlapping the ScrollView content.
-  final Color backgroundColor;
-
-  /// The background color to use when the AppBar is overlapping the ScrollView content.
-  final Color elevatedBackgroundColor;
-
-  /// The shadow color.
-  final Color shadowColor;
-
-  /// A widget to display before the [title].
-  final Widget leading;
-
   /// The primary widget displayed in the app bar.
   final Widget title;
 
   /// Widgets to display in a row after the [title] widget.
   final List<Widget> actions;
 
-  /// This widget appears across the bottom of the app bar.
-  final PreferredSizeWidget bottom;
+  /// The background color to use when the AppBar is not overlapping the ScrollView content.
+  final Color backgroundColor;
 
-  /// The brightness of the app bar's material.
-  final Brightness brightness;
+  /// The background color to use when the AppBar is overlapping the ScrollView content.
+  final Color elevatedBackgroundColor;
 
-  /// The color, opacity, and size to use for app bar icons.
-  final IconThemeData iconTheme;
+  /// The text to display next to the back button.
+  /// Only applies to iOS.
+  final String backButtonText;
 
-  /// The color, opacity, and size to use for the icons that appear in the app bar's [actions].
-  final IconThemeData actionsIconTheme;
-
-  /// The typographic styles to use for text in the app bar.
-  final TextTheme textTheme;
-
-  /// Whether the title should be centered.
+  /// Whether or not the title should be centered.
+  /// Only applies to Android. On iOS this will always be true.
   final bool centerTitle;
+
+  /// The current platform.
+  final TargetPlatform platform;
 
   @override
   _FadingSliverAppBarState createState() => _FadingSliverAppBarState();
@@ -142,25 +126,17 @@ class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProv
     }
   }
 
-  /// Builds the AppBar
-  Widget buildAppBar(BuildContext context) => AppBar(
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    leading: widget.leading,
-    title: widget.title,
-    actions: widget.actions,
-    bottom: widget.bottom,
-    brightness: widget.brightness,
-    iconTheme: widget.iconTheme,
-    actionsIconTheme: widget.actionsIconTheme,
-    textTheme: widget.textTheme,
-    centerTitle: widget.centerTitle,
-  );
-
   @override
   Widget build(BuildContext context) {
-    // Get the top safe area padding
+    // Get the safe area padding and AppBar height
     final double topPadding = MediaQuery.of(context).padding.top;
+    final double appBarHeight = widget.platform == TargetPlatform.android ? kToolbarHeight
+      : kMinInteractiveDimensionCupertino;
+    // Get the background and shadow colors
+    final Color backgroundColor = widget.backgroundColor ?? CustomTheme.of(context).background;
+    final Color elevatedBackgroundColor = widget.elevatedBackgroundColor
+      ?? CustomTheme.of(context).surface;
+    final Color shadowColor = CustomTheme.of(context).shadow;
     // Build the sliver
     return SliverPersistentHeader(
       pinned: widget.pinned,
@@ -168,16 +144,71 @@ class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProv
       delegate: _FadingSliverAppBarDelegate(
         pinned: widget.pinned,
         forceElevated: widget.pinned && _forceElevated,
-        topPadding: topPadding,
-        appBar: buildAppBar(context),
-        backgroundColor: widget.backgroundColor
-          ?? Theme.of(context).colorScheme.background,
-        elevatedBackgroundColor: widget.elevatedBackgroundColor 
-          ?? Theme.of(context).colorScheme.surface,
-        shadowColor: Theme.of(context).appBarTheme.shadowColor,
+        height: topPadding + appBarHeight,
+        appBarBuilder: (animationValue) => 
+          widget.platform == TargetPlatform.android ? buildMaterialAppbar(
+            animationValue: animationValue,
+            backgroundColor: backgroundColor,
+            elevatedBackgroundColor: elevatedBackgroundColor,
+            shadowColor: shadowColor,
+          ) : buildCupertinoAppbar(
+            animationValue: animationValue,
+            backgroundColor: backgroundColor,
+            elevatedBackgroundColor: elevatedBackgroundColor,
+          )
       )
     );
   }
+
+  /// Builds the AppBar for Android.
+  /// 
+  /// The background color and elevation are applied to a Material widget which wraps a transparent
+  /// AppBar, as the AppBar widget applies its own animation to these properties which cannot be
+  /// disabled.
+  Widget buildMaterialAppbar({
+    double animationValue, 
+    @required Color backgroundColor, 
+    @required Color elevatedBackgroundColor, 
+    @required Color shadowColor,
+  }) => Material(
+    animationDuration: Duration.zero,
+    elevation: 4,
+    color: ColorTween(begin: backgroundColor, end: elevatedBackgroundColor)
+      .lerp(animationValue),
+    shadowColor: ColorTween(begin: shadowColor.withOpacity(0), end: shadowColor)
+      .lerp(animationValue),
+    child: AppBar(
+      title: widget.title,
+      actions: widget.actions,
+      backgroundColor: Colors.transparent,
+      centerTitle: widget.centerTitle,
+      elevation: 0,
+    ),
+  );
+
+  /// Builds the AppBar for iOS.
+  /// 
+  /// The background color is applied directly to the CupertinoNavigationBar, with transparency
+  /// only being applied when elevated to prevent the blur effect being applied when the bar is
+  /// not overlaying any content.
+  Widget buildCupertinoAppbar({
+    double animationValue, 
+    @required Color backgroundColor, 
+    @required Color elevatedBackgroundColor,
+  }) => CupertinoNavigationBar(
+      middle: widget.title,
+      trailing: widget.actions != null ? Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: widget.actions,
+      ) : null,
+      actionsForegroundColor: CustomTheme.of(context).primary,
+      border: Border.all(style: BorderStyle.none),
+      backgroundColor: ColorTween(
+        begin: backgroundColor, 
+        end: elevatedBackgroundColor.withOpacity(0.8)
+      ).lerp(animationValue),
+  );
 }
 
 /// A SliverPersistentHeaderDelegate for displaying the AppBar as a sliver.  
@@ -189,11 +220,8 @@ class _FadingSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _FadingSliverAppBarDelegate({
     this.pinned = false,
     this.forceElevated = false,
-    this.topPadding = 0,
-    @required this.appBar,
-    @required this.backgroundColor,
-    @required this.elevatedBackgroundColor,
-    @required this.shadowColor,
+    @required this.height,
+    @required this.appBarBuilder,
   });
 
   /// Whether or not the appbar is pinned.
@@ -202,34 +230,19 @@ class _FadingSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   /// If the AppBar is pinned, this parameter determines if the AppBar should be elevated.
   final bool forceElevated;
 
-  /// The SafeArea top padding.
-  final double topPadding;
+  /// The AppBar height including safe area padding.
+  final double height;
 
-  /// The AppBar widget to display.
-  final AppBar appBar;
-
-  /// The background color to use when the AppBar is not overlapping the ScrollView content.
-  final Color backgroundColor;
-
-  /// The background color to use when the AppBar is overlapping the ScrollView content.
-  final Color elevatedBackgroundColor;
-
-  /// The shadow color.
-  final Color shadowColor;
+  final Widget Function(double animationValue) appBarBuilder;
   
   @override
-  double get minExtent => appBar.preferredSize.height + topPadding;
+  double get minExtent => height;
 
   @override
-  double get maxExtent => appBar.preferredSize.height + topPadding;
+  double get maxExtent => height;
 
   @override
-  bool shouldRebuild(covariant _FadingSliverAppBarDelegate oldDelegate) => 
-    forceElevated != oldDelegate.forceElevated ||
-    appBar != oldDelegate.appBar ||
-    backgroundColor != oldDelegate.backgroundColor ||
-    elevatedBackgroundColor != oldDelegate.elevatedBackgroundColor ||
-    shadowColor != oldDelegate.shadowColor;
+  bool shouldRebuild(covariant _FadingSliverAppBarDelegate oldDelegate) => true;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -237,16 +250,7 @@ class _FadingSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
       forwards: forceElevated || overlapsContent,
       duration: pinned ? Duration(milliseconds: 100) : Duration.zero,
       reverseDuration: Duration(milliseconds: 150),
-      child: appBar,
-      builder: (context, animationValue, child) => Material(
-        child: child,
-        elevation: 4,
-        animationDuration: Duration.zero,
-        color: ColorTween(begin: backgroundColor, end: elevatedBackgroundColor)
-          .lerp(animationValue),
-        shadowColor: ColorTween(begin: shadowColor.withOpacity(0), end: shadowColor)
-          .lerp(animationValue),
-      ),
+      builder: (context, animationValue, child) => appBarBuilder(animationValue)
     );
   }
 }

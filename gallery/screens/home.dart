@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/widgets/common/animation/indexed_transition_switcher.dart';
+import 'package:flutter_experiments/widgets/common/bars/platform_app_bar.dart';
 
 import 'tabs/components_tab.dart';
 import 'tabs/layouts_tab.dart';
@@ -38,9 +39,9 @@ class _GalleryTabsPageState extends State<GalleryTabsPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
+    appBar: PlatformAppBar(
+      context,
       title: Text(_titles[_selectedTab]),
-      centerTitle: true,
     ),
     body: IndexedTransitionSwitcher(
       index: _selectedTab,

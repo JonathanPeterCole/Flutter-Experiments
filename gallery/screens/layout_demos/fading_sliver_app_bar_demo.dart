@@ -14,6 +14,7 @@ class FadingSliverAppBarDemoScreen extends StatelessWidget {
         primary: true,
         slivers: [
           FadingSliverAppBar(
+            context,
             pinned: pinned,
             scrollController: PrimaryScrollController.of(context),
             title: Text('FadingSliverAppBar Demo'),

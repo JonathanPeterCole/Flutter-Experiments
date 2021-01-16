@@ -54,6 +54,7 @@ class _MyHomePageState extends State<HomeScreen> {
         primary: true,
         slivers: [
           FadingSliverAppBar(
+            context,
             pinned: true,
             scrollController: PrimaryScrollController.of(context),
             title: Text('Hello'),

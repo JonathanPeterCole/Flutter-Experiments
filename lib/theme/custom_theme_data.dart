@@ -112,6 +112,7 @@ class CustomThemeData {
     // Get the default color scheme based on the brightness
     ColorScheme defaultColorScheme = brightness == Brightness.light ? ColorScheme.light() : ColorScheme.dark();
     ThemeData defaultThemeData = brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
+    CupertinoTextThemeData defaultCupertinoTextThemeData = CupertinoTextThemeData();
     // Create the theme data
     return ThemeData(
       brightness: brightness,
@@ -165,6 +166,18 @@ class CustomThemeData {
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
       ),
+      // Cupertino Styles
+      cupertinoOverrideTheme: CupertinoThemeData(
+        brightness: this.brightness,
+        primaryColor: this.primary,
+        primaryContrastingColor: this.onPrimary,
+        barBackgroundColor: this.surface,
+        scaffoldBackgroundColor: this.background,
+        textTheme: defaultCupertinoTextThemeData.copyWith(
+          primaryColor: this.textPrimary,
+          navTitleTextStyle: defaultCupertinoTextThemeData.navTitleTextStyle.copyWith(color: this.textPrimary)
+        )
+      )
     );
   }
 }
