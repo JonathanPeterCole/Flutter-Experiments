@@ -8,20 +8,27 @@
             "name": "Flutter Release",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "--no-sound-null-safety",
+            ]
         },
         {
             "name": "Flutter Debug: Prod",
             "request": "launch",
             "type": "dart",
+            "args": [
+                "--no-sound-null-safety",
+            ]
         },
         {
             "name": "Flutter Debug: Local",
             "request": "launch",
             "type": "dart",
             "args": [
+                "--no-sound-null-safety",
                 "--dart-define",
-                "API_URL=https://localhost:1000/"
+                "API_URL=https://localhost:1000/",
             ]
         },
         {
@@ -30,6 +37,7 @@
             "type": "dart",
             "program": "gallery/main.dart",
             "args": [
+                "--no-sound-null-safety",
                 "--dart-define",
                 "TARGET_PLATFORM=ANDROID"
             ]
@@ -40,6 +48,7 @@
             "type": "dart",
             "program": "gallery/main.dart",
             "args": [
+                "--no-sound-null-safety",
                 "--dart-define",
                 "TARGET_PLATFORM=IOS"
             ]

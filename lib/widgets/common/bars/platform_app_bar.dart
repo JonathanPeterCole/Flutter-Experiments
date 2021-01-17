@@ -9,7 +9,7 @@ import 'package:flutter_experiments/theme/custom_theme.dart';
 class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   PlatformAppBar(BuildContext context, {
-    Key key,
+    Key? key,
     this.title,
     this.actions,
     this.bottom,
@@ -20,24 +20,24 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
        super(key: key);
 
   /// The primary widget displayed in the app bar.
-  final Widget title;
+  final Widget? title;
 
   /// Widgets to display in a row after the [title] widget.
-  final List<Widget> actions;
+  final List<Widget>? actions;
 
   /// This widget appears across the bottom of the app bar.
-  final PreferredSizeWidget bottom;
+  final PreferredSizeWidget? bottom;
 
   /// The background color.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// The text to display next to the back button.
   /// Only applies to iOS.
-  final String backButtonText;
+  final String? backButtonText;
 
   /// Whether or not the title should be centered.
   /// Only applies to Android. On iOS this will always be true.
-  final bool centerTitle;
+  final bool? centerTitle;
 
   /// The current platform.
   final TargetPlatform platform;
@@ -45,7 +45,7 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(
     (platform == TargetPlatform.android ? kToolbarHeight : kMinInteractiveDimensionCupertino) + 
-    (this.bottom?.preferredSize?.height ?? 0.0));
+    (this.bottom?.preferredSize.height ?? 0.0));
 
   @override
   Widget build(BuildContext context) => platform == TargetPlatform.android 
@@ -64,7 +64,7 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
     trailing: actions != null ? Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: actions,
+      children: actions!,
     ) : null,
     previousPageTitle: backButtonText,
     actionsForegroundColor: CustomTheme.of(context).primary,

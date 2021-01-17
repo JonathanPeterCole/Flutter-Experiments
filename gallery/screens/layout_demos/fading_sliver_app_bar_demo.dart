@@ -3,7 +3,7 @@ import 'package:flutter_experiments/widgets/common/bars/fading_sliver_app_bar.da
 
 class FadingSliverAppBarDemoScreen extends StatelessWidget {
 
-  FadingSliverAppBarDemoScreen({Key key, this.pinned}) : super(key: key);
+  FadingSliverAppBarDemoScreen({Key? key, this.pinned = false}) : super(key: key);
 
   final bool pinned;
 

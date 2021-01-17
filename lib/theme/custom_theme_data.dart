@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 
 /// A class to quickly generate flutter themes from a simple color palette.
 class CustomThemeData {
-  const CustomThemeData(this.brightness, {
-    this.primary,
-    this.secondary,
-    this.background,
-    this.surface,
-    this.textPrimary,
-    this.textSecondary,
-    this.onPrimary,
-    this.splash,
-    this.highlight,
-    this.shadow,
-    this.divider,
-    this.danger,
+  const CustomThemeData({
+    required this.brightness,
+    required this.primary,
+    required this.secondary,
+    required this.background,
+    required this.surface,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.onPrimary,
+    required this.splash,
+    required this.highlight,
+    required this.shadow,
+    required this.divider,
+    required this.danger,
   });
 
   const CustomThemeData.light()
@@ -79,23 +80,24 @@ class CustomThemeData {
 
   /// Copy the current theme with new properties.
   CustomThemeData copyWith({
-    Brightness brightness,
-    Color primary,
-    Color secondary,
-    Color background,
-    Color surface,
-    Color textPrimary,
-    Color textSecondary,
-    Color onPrimary,
-    Color splash,
-    Color highlight,
-    Color shadow,
-    Color divider,
-    Color danger,
+    Brightness? brightness,
+    Color? primary,
+    Color? secondary,
+    Color? background,
+    Color? surface,
+    Color? textPrimary,
+    Color? textSecondary,
+    Color? onPrimary,
+    Color? splash,
+    Color? highlight,
+    Color? shadow,
+    Color? divider,
+    Color? danger,
   }) => CustomThemeData(
-    brightness ?? this.brightness,
+    brightness: brightness ?? this.brightness,
     primary: primary ?? this.primary,
     secondary: secondary ?? this.secondary,
+    background: background ?? this.background,
     surface: surface ?? this.surface,
     textPrimary: textPrimary ?? this.textPrimary,
     textSecondary: textSecondary ?? this.textSecondary,

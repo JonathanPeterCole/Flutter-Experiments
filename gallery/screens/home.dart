@@ -15,10 +15,10 @@ class GalleryTabsPage extends StatefulWidget {
 
 class _GalleryTabsPageState extends State<GalleryTabsPage> {
 
-  int _selectedTab;
-  bool _reverse;
-  List<String> _titles;
-  List<Widget> _screens;
+  int _selectedTab = 0;
+  bool _reverse = false;
+  List<String> _titles = [];
+  List<Widget> _screens = [];
 
   @override
   void initState() {

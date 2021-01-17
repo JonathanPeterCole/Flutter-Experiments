@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 class IndexedTransitionSwitcher extends StatefulWidget {
   /// Creates an [IndexedTransitionSwitcher].
   const IndexedTransitionSwitcher({
-    @required this.index, 
-    @required this.children, 
-    @required this.transitionBuilder,
+    required this.index, 
+    required this.children, 
+    required this.transitionBuilder,
     this.reverse = false,
     this.duration = const Duration(milliseconds: 300)});
 
@@ -46,7 +46,7 @@ class IndexedTransitionSwitcher extends StatefulWidget {
 class _IndexedTransitionSwitcherState extends State<IndexedTransitionSwitcher> 
     with TickerProviderStateMixin {
 
-  List<_ChildEntry> _childEntries;
+  List<_ChildEntry> _childEntries = [];
 
   @override
   void initState() {
@@ -148,12 +148,12 @@ class _IndexedTransitionSwitcherState extends State<IndexedTransitionSwitcher>
 /// Internal representation of a child.
 class _ChildEntry {
   _ChildEntry({
-    @required this.index,
-    @required this.key,
-    @required this.primaryController,
-    @required this.secondaryController,
-    @required this.transitionChild,
-    @required this.onStage
+    required this.index,
+    required this.key,
+    required this.primaryController,
+    required this.secondaryController,
+    required this.transitionChild,
+    required this.onStage
   });
 
   /// The child index.

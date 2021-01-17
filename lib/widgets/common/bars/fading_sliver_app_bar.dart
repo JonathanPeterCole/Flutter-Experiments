@@ -31,7 +31,7 @@ import 'package:flutter_experiments/widgets/common/animation/toggle_animation_bu
 class FadingSliverAppBar extends StatefulWidget {
 
   FadingSliverAppBar(BuildContext context, {
-    Key key,
+    Key? key,
     this.pinned = false,
     this.scrollController,
     this.title,
@@ -56,27 +56,27 @@ class FadingSliverAppBar extends StatefulWidget {
   /// The ScrollController for the parent ScrollView.
   /// 
   /// If the AppBar is pinned, the scroll controller is used to determine if the user has scrolled.
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   /// The primary widget displayed in the app bar.
-  final Widget title;
+  final Widget? title;
 
   /// Widgets to display in a row after the [title] widget.
-  final List<Widget> actions;
+  final List<Widget>? actions;
 
   /// The background color to use when the AppBar is not overlapping the ScrollView content.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// The background color to use when the AppBar is overlapping the ScrollView content.
-  final Color elevatedBackgroundColor;
+  final Color? elevatedBackgroundColor;
 
   /// The text to display next to the back button.
   /// Only applies to iOS.
-  final String backButtonText;
+  final String? backButtonText;
 
   /// Whether or not the title should be centered.
   /// Only applies to Android. On iOS this will always be true.
-  final bool centerTitle;
+  final bool? centerTitle;
 
   /// The current platform.
   final TargetPlatform platform;
@@ -88,7 +88,7 @@ class FadingSliverAppBar extends StatefulWidget {
 class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProviderStateMixin {
 
   /// Whether or not the AppBar should be elevated when pinned == true.
-  bool _forceElevated;
+  bool _forceElevated = false;
 
   @override
   void initState() {
@@ -113,15 +113,15 @@ class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProv
   /// Adds the scroll event listener if the AppBar is pinned.
   setupScrollListener() {
     if (widget.pinned) {
-      widget.scrollController.addListener(onScrollEvent);
+      widget.scrollController!.addListener(onScrollEvent);
     } 
   }
 
   /// Handles scroll events to force elevation on scroll.
   onScrollEvent() {
-    if (widget.scrollController.offset <= 0 && _forceElevated) {
+    if (widget.scrollController!.offset <= 0 && _forceElevated) {
       setState(() => _forceElevated = false);
-    } else if (widget.scrollController.offset > 0 && !_forceElevated) {
+    } else if (widget.scrollController!.offset > 0 && !_forceElevated) {
       setState(() => _forceElevated = true);
     }
   }
@@ -166,10 +166,10 @@ class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProv
   /// AppBar, as the AppBar widget applies its own animation to these properties which cannot be
   /// disabled.
   Widget buildMaterialAppbar({
-    double animationValue, 
-    @required Color backgroundColor, 
-    @required Color elevatedBackgroundColor, 
-    @required Color shadowColor,
+    required double animationValue, 
+    required Color backgroundColor, 
+    required Color elevatedBackgroundColor, 
+    required Color shadowColor,
   }) => Material(
     animationDuration: Duration.zero,
     elevation: 4,
@@ -192,15 +192,15 @@ class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProv
   /// only being applied when elevated to prevent the blur effect being applied when the bar is
   /// not overlaying any content.
   Widget buildCupertinoAppbar({
-    double animationValue, 
-    @required Color backgroundColor, 
-    @required Color elevatedBackgroundColor,
+    required double animationValue, 
+    required Color backgroundColor, 
+    required Color elevatedBackgroundColor,
   }) => CupertinoNavigationBar(
       middle: widget.title,
       trailing: widget.actions != null ? Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: widget.actions,
+        children: widget.actions!,
       ) : null,
       actionsForegroundColor: CustomTheme.of(context).primary,
       border: Border.all(style: BorderStyle.none),
@@ -217,8 +217,8 @@ class _FadingSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _FadingSliverAppBarDelegate({
     this.pinned = false,
     this.forceElevated = false,
-    @required this.height,
-    @required this.appBarBuilder,
+    required this.height,
+    required this.appBarBuilder,
   });
 
   /// Whether or not the appbar is pinned.

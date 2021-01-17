@@ -7,8 +7,8 @@ import 'package:flutter_experiments/theme/custom_theme.dart';
 class PlatformButton extends StatelessWidget {
 
   PlatformButton({
-    Key key,
-    this.child,
+    Key? key,
+    required this.child,
     this.onPressed,
     this.danger = false,
     this.type = PlatformButtonType.Primary,
@@ -16,7 +16,7 @@ class PlatformButton extends StatelessWidget {
 
   
   final Widget child;
-  final Function onPressed;
+  final VoidCallback? onPressed;
   final bool danger;
   final PlatformButtonType type;
 
@@ -56,7 +56,7 @@ class PlatformButton extends StatelessWidget {
 
   Widget iosButton(BuildContext context, Color buttonColor, Color buttonForegroundColor) {
     // Get the button colors
-    Color backgroundColor = type == PlatformButtonType.Primary ? buttonColor : null;
+    Color? backgroundColor = type == PlatformButtonType.Primary ? buttonColor : null;
     Color textColor = type == PlatformButtonType.Primary ? buttonForegroundColor : buttonColor;
     // Return the button
     return CupertinoButton(

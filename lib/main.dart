@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             ? Brightness.dark
             : Brightness.light;
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          child: child,
+          child: child!,
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarBrightness: brightness,

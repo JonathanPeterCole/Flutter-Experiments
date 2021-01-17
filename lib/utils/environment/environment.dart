@@ -12,7 +12,7 @@ class Environment {
     defaultValue: 'https://example.api.com/'
   );
   /// The optional target platform override.
-  static const TargetPlatform PLATFORM_OVERRIDE = !bool.hasEnvironment('PLATFORM_OVERRIDE')
+  static const TargetPlatform? PLATFORM_OVERRIDE = !bool.hasEnvironment('PLATFORM_OVERRIDE')
     ? null : String.fromEnvironment('PLATFORM_OVERRIDE') == 'android'
       ? TargetPlatform.android
       : TargetPlatform.iOS;
