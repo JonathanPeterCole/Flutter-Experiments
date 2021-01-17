@@ -39,7 +39,7 @@
             "args": [
                 "--no-sound-null-safety",
                 "--dart-define",
-                "TARGET_PLATFORM=ANDROID"
+                "PLATFORM_OVERRIDE=android"
             ]
         },
         {
@@ -50,7 +50,7 @@
             "args": [
                 "--no-sound-null-safety",
                 "--dart-define",
-                "TARGET_PLATFORM=IOS"
+                "PLATFORM_OVERRIDE=ios"
             ]
         }
     ]
