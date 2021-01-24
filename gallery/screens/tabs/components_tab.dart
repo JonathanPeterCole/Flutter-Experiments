@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/platform_button.dart';
+import 'package:flutter_experiments/widgets/common/controls/buttons/outlined_platform_button.dart';
+import 'package:flutter_experiments/widgets/common/controls/buttons/contained_button.dart';
+import 'package:flutter_experiments/widgets/common/controls/buttons/text_platform_button.dart';
 
 class ComponentsTab extends StatelessWidget {
   @override
@@ -14,48 +16,39 @@ class ComponentsTab extends StatelessWidget {
         padding: EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
       ),
       ListTile(
-        title: PlatformButton(
-          child: Text('Primary'),
+        title: ContainedPlatformButton(
+          label: Text('Contained'),
           onPressed: () {},
         ),
       ),
       ListTile(
-        title: PlatformButton(
-          child: Text('Primary Disabled'),
+        title: ContainedPlatformButton(
+          label: Text('Contained Disabled'),
+          onPressed: null,
         ),
       ),
       ListTile(
-        title: PlatformButton(
-          child: Text('Primary Danger'),
+        title: OutlinedPlatformButton(
+          label: Text('Outlined'),
           onPressed: () {},
-          danger: true,
         ),
       ),
       ListTile(
-        title: PlatformButton(
-          child: Text('Primary Danger Disabled'),
-          danger: true,
+        title: OutlinedPlatformButton(
+          label: Text('Outlined Disabled'),
+          onPressed: null,
         ),
       ),
       ListTile(
-        title: PlatformButton(
-          child: Text('Secondary'),
+        title: TextPlatformButton(
+          label: Text('Text'),
           onPressed: () {},
-          type: PlatformButtonType.Secondary
         ),
       ),
       ListTile(
-        title: PlatformButton(
-          child: Text('Secondary Danger'),
-          onPressed: () {},
-          danger: true,
-          type: PlatformButtonType.Secondary
-        ),
-      ),
-      ListTile(
-        title: PlatformButton(
-          child: Text('Secondary Disabled'),
-          type: PlatformButtonType.Secondary
+        title: TextPlatformButton(
+          label: Text('Text Disabled'),
+          onPressed: null,
         ),
       ),
       Divider(),

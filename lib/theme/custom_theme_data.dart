@@ -132,7 +132,8 @@ class CustomThemeData {
       dividerColor: this.divider,
       // Inkwell & Button Theming
       splashFactory: InkRipple.splashFactory,
-      splashColor: this.splash,
+      splashColor: defaultThemeData.platform == TargetPlatform.iOS
+        ? Colors.transparent : this.splash,
       highlightColor: this.highlight,
       buttonColor: this.primary,
       buttonTheme: ButtonThemeData(
