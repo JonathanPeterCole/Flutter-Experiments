@@ -141,6 +141,8 @@ class _PlatformButtonState extends State<PlatformButton> {
       end: widget.trailingIcon == null ? 16 : 12.0,
     ),
     child: Center(
+      widthFactor: 1.0,
+      heightFactor: 1.0,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
