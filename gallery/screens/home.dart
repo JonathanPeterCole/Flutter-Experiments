@@ -43,6 +43,7 @@ class _GalleryTabsPageState extends State<GalleryTabsPage> {
     appBar: PlatformAppBar(
       context,
       title: Text(_titles[_selectedTab]),
+      centerTitle: true,
     ),
     body: IndexedTransitionSwitcher(
       index: _selectedTab,
