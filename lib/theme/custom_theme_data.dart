@@ -14,7 +14,6 @@ class CustomThemeData {
     required this.textPrimary,
     required this.textSecondary,
     required this.onPrimary,
-    required this.splash,
     required this.highlight,
     required this.shadow,
     required this.divider,
@@ -30,8 +29,7 @@ class CustomThemeData {
       textPrimary = const Color.fromRGBO(12, 18, 26, 1),
       textSecondary = const Color.fromRGBO(120, 125, 135, 1),
       onPrimary = const Color.fromRGBO(255, 255, 255, 1),
-      splash = const Color.fromRGBO(104, 124, 255, 0.2),
-      highlight = const Color.fromRGBO(104, 124, 255, 0.1),
+      highlight = const Color.fromRGBO(104, 124, 255, 0.2),
       shadow = const Color.fromRGBO(55, 75, 91, 0.2),
       divider = const Color.fromRGBO(0, 0, 0, 0.3),
       danger = const Color.fromRGBO(210, 65, 65, 1);
@@ -45,8 +43,7 @@ class CustomThemeData {
       textPrimary = const Color.fromRGBO(255, 255, 255, 1),
       textSecondary = const Color.fromRGBO(120, 125, 135, 1),
       onPrimary = const Color.fromRGBO(255, 255, 255, 1),
-      splash = const Color.fromRGBO(104, 124, 255, 0.2),
-      highlight = const Color.fromRGBO(104, 124, 255, 0.1),
+      highlight = const Color.fromRGBO(104, 124, 255, 0.2),
       shadow = const Color.fromRGBO(0, 0, 0, 0.2),
       divider = const Color.fromRGBO(255, 255, 255, 0.3),
       danger = const Color.fromRGBO(210, 65, 65, 1);
@@ -67,9 +64,7 @@ class CustomThemeData {
   final Color textSecondary;
   /// The color for text and icons against a primary color background.
   final Color onPrimary;
-  /// The ink splash color (applies to InkWell's Material splash effects).
-  final Color splash;
-  /// The highlight color (applies to button's whilst pressed).
+  /// The color used for ink splashes and iOS buttons with [CupertinoHighlightType.color].
   final Color highlight;
   /// The shadow color (applies to AppBar elevation).
   final Color shadow;
@@ -88,7 +83,6 @@ class CustomThemeData {
     Color? textPrimary,
     Color? textSecondary,
     Color? onPrimary,
-    Color? splash,
     Color? highlight,
     Color? shadow,
     Color? divider,
@@ -102,7 +96,6 @@ class CustomThemeData {
     textPrimary: textPrimary ?? this.textPrimary,
     textSecondary: textSecondary ?? this.textSecondary,
     onPrimary: onPrimary ?? this.onPrimary,
-    splash: splash ?? this.splash,
     highlight: highlight ?? this.highlight,
     shadow: shadow ?? this.shadow,
     divider: divider ?? this.divider,
@@ -133,7 +126,7 @@ class CustomThemeData {
       // Inkwell & Button Theming
       splashFactory: InkRipple.splashFactory,
       splashColor: defaultThemeData.platform == TargetPlatform.iOS
-        ? Colors.transparent : this.splash,
+        ? Colors.transparent : this.highlight,
       highlightColor: this.highlight,
       buttonColor: this.primary,
       buttonTheme: ButtonThemeData(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_experiments/theme/custom_theme.dart';
 import 'package:flutter_experiments/widgets/common/controls/buttons/tap_target_padding.dart';
 
 /// Creates a tappable surface that adapts to the current platform.
@@ -8,7 +9,8 @@ import 'package:flutter_experiments/widgets/common/controls/buttons/tap_target_p
 /// that should visually respond to tap events appropriately depending on the platform.
 /// 
 /// On Android, an ink splash will be used to show the highlight state.
-/// On iOS, the opacity will change to show the pressed state.
+/// On iOS, the highlight state will be either change the button opacity or display the highlight
+/// color, depending on the [cupertinoHighlightType] property.
 class PlatformTappable extends StatefulWidget {
 
   const PlatformTappable({
@@ -19,8 +21,11 @@ class PlatformTappable extends StatefulWidget {
     this.onHighlightChanged,
     this.color,
     this.splashColor,
+    this.focusColor,
+    this.highlightColor,
     this.elevation,
     this.shape,
+    this.cupertinoHighlightType = CupertinoHighlightType.Fade,
     this.constraints = const BoxConstraints(),
     this.minTapTargetSize = const Size(
       kMinInteractiveDimension,
@@ -40,10 +45,17 @@ class PlatformTappable extends StatefulWidget {
   final Color? color;
   /// The color to use for ink splashes. This applies to Android only.
   final Color? splashColor;
+  /// The color to overlay when focused. Defaults to transparent.
+  final Color? focusColor;
+  /// The color to overlay when pressed. Defaults to transparent on Android, and 
+  /// CustomThemeData.highlight on iOS.
+  final Color? highlightColor;
   /// The elevation for the button.
   final double? elevation;
   /// The tappable surface shape, including the border width, radius, and color.
   final ShapeBorder? shape;
+  /// The highlight type to use on iOS.
+  final CupertinoHighlightType cupertinoHighlightType;
   /// The minimum and maximum size constraints.
   final BoxConstraints constraints;
   /// The minimum tap target size for the button. Defaults to 44x44 on iOS, and 48x48 on Android.
@@ -102,6 +114,16 @@ class _PlatformTappableState extends State<PlatformTappable> with SingleTickerPr
     }
   }
 
+  /// Gets the effective highlight color depending on the platform and cupertinoHighlightType.
+  Color _getHighlightColor(BuildContext context, bool isCupertino) {
+    if (isCupertino) {
+      return widget.cupertinoHighlightType == CupertinoHighlightType.Color
+        ? widget.highlightColor ?? CustomTheme.of(context).highlight
+        : Colors.transparent;
+    }
+    return widget.highlightColor ?? Colors.transparent;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Get the current platform
@@ -124,7 +146,8 @@ class _PlatformTappableState extends State<PlatformTappable> with SingleTickerPr
               onFocusChange: widget.onFocusChanged,
               onHighlightChanged: (highlighted) => _onHighlightChanged(isCupertino, highlighted),
               splashColor: isCupertino ? Colors.transparent : widget.splashColor,
-              highlightColor: Colors.transparent,
+              focusColor: widget.focusColor ?? Colors.transparent,
+              highlightColor: _getHighlightColor(context, isCupertino),
               customBorder: widget.shape,
               child: widget.child,
             ),
@@ -140,4 +163,13 @@ class _PlatformTappableState extends State<PlatformTappable> with SingleTickerPr
         .drive(Tween<double>(begin: 1.0, end: 0.4)),
     );
   } 
+}
+
+/// The highlight type to use on iOS.
+/// 
+/// [Fade] will change the button opacity when highlighted.
+/// [Color] will display the highlight color when highlighed.
+enum CupertinoHighlightType {
+  Fade,
+  Color
 }

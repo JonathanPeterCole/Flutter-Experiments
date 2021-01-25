@@ -29,8 +29,7 @@ class ContainedPlatformButton extends StatelessWidget {
     trailingIcon: trailingIcon,
     color: CustomTheme.of(context).primary,
     foregroundColor: CustomTheme.of(context).onPrimary,
-    disabledColor: CustomTheme.of(context).primary.withOpacity(0.38),
-    disabledForegroundColor: CustomTheme.of(context).onPrimary.withOpacity(0.5),
+    focusColor: CustomTheme.of(context).onPrimary.withOpacity(0.12),
   );
 
   Widget materialButton(BuildContext context) => PlatformButton(
@@ -40,8 +39,7 @@ class ContainedPlatformButton extends StatelessWidget {
     trailingIcon: trailingIcon,
     color: CustomTheme.of(context).primary,
     foregroundColor: CustomTheme.of(context).onPrimary,
-    disabledColor: CustomTheme.of(context).primary.withOpacity(0.38),
-    disabledForegroundColor: CustomTheme.of(context).onPrimary.withOpacity(0.6),
+    focusColor: CustomTheme.of(context).onPrimary.withOpacity(0.12),
     elevation: 2.0,
     focusElevation: 4.0,
     highlightElevation: 8.0,

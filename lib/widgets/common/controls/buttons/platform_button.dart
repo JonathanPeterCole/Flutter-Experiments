@@ -15,15 +15,13 @@ class PlatformButton extends StatefulWidget {
     this.trailingIcon,
     this.color = Colors.transparent,
     this.foregroundColor,
-    this.disabledColor,
-    this.disabledForegroundColor,
-    this.borderWidth,
-    this.borderColor,
-    this.disabledBorderColor,
+    this.focusColor,
+    this.highlightColor,
     this.elevation = 0,
     this.focusElevation,
     this.highlightElevation,
     this.disabledElevation,
+    this.borderSide,
   }) : super(key: key);
 
   /// Called when the button has been pressed.
@@ -38,16 +36,10 @@ class PlatformButton extends StatefulWidget {
   final Color color;
   /// The button foreground color. Defaults to the CustomTheme primary color.
   final Color? foregroundColor;
-  /// The disabled button color.
-  final Color? disabledColor;
-  /// The disabled button foreground color.
-  final Color? disabledForegroundColor;
-  /// The button border width. The [borderColor] property must also be set for a border to display.
-  final double? borderWidth;
-  /// The button border color. The [borderWidth] property must also be set for a border to display.
-  final Color? borderColor;
-  /// The disabled button border color.
-  final Color? disabledBorderColor;
+  /// The color to overlay when focused.
+  final Color? focusColor;
+  /// The color to overlay when pressed.
+  final Color? highlightColor;
   /// The button's Material elevation.
   final double elevation;
   /// The elevation to use when the button is focused.
@@ -56,6 +48,8 @@ class PlatformButton extends StatefulWidget {
   final double? highlightElevation;
   /// The elevation to use when the button is disabled.
   final double? disabledElevation;
+  /// The borders to apply to the button.
+  final BorderSide? borderSide;
 
   @override
   _PlatformButtonState createState() => _PlatformButtonState();
@@ -74,30 +68,6 @@ class _PlatformButtonState extends State<PlatformButton> {
 
   bool get _isDisabled => widget.onPressed == null;
 
-  /// Get the button color based on the current state.
-  Color get _effectiveColor {
-    if (_isDisabled) {
-      return widget.disabledColor ?? widget.color;
-    }
-    return widget.color;
-  }
-
-  /// Get the foreground color based on the current state.
-  Color? get _effectiveForegroundColor {
-    if (_isDisabled) {
-      return widget.disabledForegroundColor ?? widget.foregroundColor;
-    }
-    return widget.foregroundColor;
-  }
-
-  /// Gets the border color based on the current state.
-  Color? get _effectiveBorderColor {
-    if (_isDisabled) {
-      return widget.disabledBorderColor ?? widget.borderColor;
-    }
-    return widget.borderColor;
-  }
-
   /// Get the button elevation based on the current state.
   double get _effectiveElevation {
     if (_isDisabled) {
@@ -112,32 +82,34 @@ class _PlatformButtonState extends State<PlatformButton> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the target platform and effective style
+    // Get the target platform and foreground color
     final bool isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
-    final Color color = _effectiveColor;
-    final Color foregroundColor = _effectiveForegroundColor ?? CustomTheme.of(context).primary;
+    final Color foregroundColor = widget.foregroundColor ?? CustomTheme.of(context).primary;
     // Build the button
-    return PlatformTappable(
-      onTap: widget.onPressed,
-      color: color,
-      splashColor: foregroundColor.withOpacity(0.12),
-      elevation: _effectiveElevation,
-      onFocusChanged: (focused) => setState(() => _isFocused = focused),
-      onHighlightChanged: (pressed) => setState(() => _isPressed = pressed),
-      constraints: isCupertino
-        ? BoxConstraints(minWidth: 48.0, minHeight: 48.0)
-        : BoxConstraints(minWidth: 88.0, minHeight: 36.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(isCupertino ? 8.0 : 4.0),
-        side: widget.borderColor != null && widget.borderWidth != null ? BorderSide(
-          color: _effectiveBorderColor!,
-          width: widget.borderWidth!,
-        ) : BorderSide.none,
-      ),
-      child: childThemes(
-        isCupertino: isCupertino,
-        foregroundColor: foregroundColor,
-        child: buttonContent(),
+    return AnimatedOpacity(
+      opacity: _isDisabled ? 0.38 : 1.0,
+      duration: Duration(milliseconds: 100),
+      child: PlatformTappable(
+        onTap: widget.onPressed,
+        color: widget.color,
+        splashColor: foregroundColor.withOpacity(0.12),
+        focusColor: widget.focusColor,
+        highlightColor: widget.highlightColor,
+        elevation: _effectiveElevation,
+        onFocusChanged: (focused) => setState(() => _isFocused = focused),
+        onHighlightChanged: (pressed) => setState(() => _isPressed = pressed),
+        constraints: isCupertino
+          ? BoxConstraints(minWidth: 48.0, minHeight: 48.0)
+          : BoxConstraints(minWidth: 88.0, minHeight: 36.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(isCupertino ? 8.0 : 4.0),
+          side: widget.borderSide ?? BorderSide.none,
+        ),
+        child: childThemes(
+          isCupertino: isCupertino,
+          foregroundColor: foregroundColor,
+          child: buttonContent(),
+        ),
       ),
     );
   }

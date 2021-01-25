@@ -19,28 +19,15 @@ class OutlinedPlatformButton extends StatelessWidget {
   final Widget? trailingIcon;
 
   @override
-  Widget build(BuildContext context) => Theme.of(context).platform == TargetPlatform.iOS
-    ? cupertinoButton(context) : materialButton(context);
-
-  Widget cupertinoButton(BuildContext context) => PlatformButton(
+  Widget build(BuildContext context) => PlatformButton(
     onPressed: onPressed,
     label: label,
     leadingIcon: leadingIcon,
     trailingIcon: trailingIcon,
-    disabledForegroundColor: CustomTheme.of(context).primary.withOpacity(0.38),
-    borderWidth: 1,
-    borderColor: CustomTheme.of(context).primary,
-    disabledBorderColor: CustomTheme.of(context).primary.withOpacity(0.38),
-  );
-
-  Widget materialButton(BuildContext context) => PlatformButton(
-    onPressed: onPressed,
-    label: label,
-    leadingIcon: leadingIcon,
-    trailingIcon: trailingIcon,
-    borderWidth: 1,
-    borderColor: CustomTheme.of(context).primary,
-    disabledBorderColor: CustomTheme.of(context).primary.withOpacity(0.38),
-    disabledForegroundColor: CustomTheme.of(context).primary.withOpacity(0.38),
+    focusColor: CustomTheme.of(context).primary.withOpacity(0.12),
+    borderSide: BorderSide(
+      width: 1,
+      color: CustomTheme.of(context).primary
+    ),
   );
 }
