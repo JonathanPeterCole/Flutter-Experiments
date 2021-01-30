@@ -5,13 +5,13 @@ import 'package:flutter_experiments/widgets/common/controls/buttons/platform_but
 
 class ContainedPlatformButton extends StatelessWidget {
 
-  ContainedPlatformButton({
+  const ContainedPlatformButton({
     Key? key,
     required this.onPressed,
     required this.label,
     this.leadingIcon,
     this.trailingIcon,
-  });
+  }) : super(key: key);
 
   final VoidCallback? onPressed;
   final Widget label;

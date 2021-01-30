@@ -52,7 +52,7 @@ class _IndexedTransitionSwitcherState extends State<IndexedTransitionSwitcher>
   void initState() {
     super.initState();
     // Create the page entries
-    this._childEntries = widget.children
+    _childEntries = widget.children
       .asMap().entries
       .map((entry) => _createPageEntry(entry.key, entry.value))
       .toList();
@@ -63,9 +63,9 @@ class _IndexedTransitionSwitcherState extends State<IndexedTransitionSwitcher>
     super.didUpdateWidget(oldWidget);
     // Transition if the index has changed
     if (widget.index != oldWidget.index) {
-      _ChildEntry newChild = _childEntries
+      final _ChildEntry newChild = _childEntries
         .where((entry) => entry.index == widget.index).first;
-      _ChildEntry oldChild = _childEntries
+      final _ChildEntry oldChild = _childEntries
         .where((entry) => entry.index == oldWidget.index).first;
       // Animate the children
       if (widget.reverse) {
@@ -125,7 +125,7 @@ class _IndexedTransitionSwitcherState extends State<IndexedTransitionSwitcher>
   @override
   void dispose() {
     // Dispose of the animation controllers
-    for (_ChildEntry entry in _childEntries) {
+    for (final _ChildEntry entry in _childEntries) {
       entry.dispose();
     }
     super.dispose();

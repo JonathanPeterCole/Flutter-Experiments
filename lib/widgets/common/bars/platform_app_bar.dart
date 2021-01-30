@@ -45,7 +45,7 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(
     (platform == TargetPlatform.android ? kToolbarHeight : kMinInteractiveDimensionCupertino) + 
-    (this.bottom?.preferredSize.height ?? 0.0));
+    (bottom?.preferredSize.height ?? 0.0));
 
   @override
   Widget build(BuildContext context) => platform == TargetPlatform.android 

@@ -16,7 +16,7 @@ import 'package:flutter/widgets.dart';
 /// ```
 class ToggleAnimationBuilder extends StatefulWidget {
 
-  ToggleAnimationBuilder({
+  const ToggleAnimationBuilder({
     Key? key,
     this.forwards = false,
     required this.duration,

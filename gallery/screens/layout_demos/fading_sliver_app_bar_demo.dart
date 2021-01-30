@@ -3,7 +3,7 @@ import 'package:flutter_experiments/widgets/common/bars/fading_sliver_app_bar.da
 
 class FadingSliverAppBarDemoScreen extends StatelessWidget {
 
-  FadingSliverAppBarDemoScreen({Key? key, this.pinned = false}) : super(key: key);
+  const FadingSliverAppBarDemoScreen({Key? key, this.pinned = false}) : super(key: key);
 
   final bool pinned;
 
@@ -17,12 +17,12 @@ class FadingSliverAppBarDemoScreen extends StatelessWidget {
             context,
             pinned: pinned,
             scrollController: PrimaryScrollController.of(context),
-            title: Text('FadingSliverAppBar Demo'),
+            title: const Text('FadingSliverAppBar Demo'),
             centerTitle: true,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => ListTile(title: Text('Example SliverList')),
+              (context, index) => const ListTile(title: Text('Example SliverList')),
               childCount: 30
             ),
           ),

@@ -4,14 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
 import 'package:flutter_experiments/theme/custom_theme_data.dart';
 import 'package:flutter_experiments/utils/environment/environment.dart';
-import 'package:get_it/get_it.dart';
 
 import 'screens/home.dart';
 
 Future<void> main() async {
-  // Prepare GetIt service locator
-  final getIt = GetIt.instance;
-
   // Override the target platform on debug builds if a platform was specified
   if (Environment.DEBUG && Environment.PLATFORM_OVERRIDE != null) {
     debugDefaultTargetPlatformOverride = Environment.PLATFORM_OVERRIDE;
@@ -19,7 +15,7 @@ Future<void> main() async {
 
   // Set transparent status bar (the overlay style is also set when the app rebuilds, but using an
   // AppBar seems to override the status bar color unless it is also set here)
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
 

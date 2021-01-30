@@ -8,20 +8,20 @@ class ComponentsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListView(
     children: [
-      SizedBox(height: 6),
+      const SizedBox(height: 6),
       Padding(
         child: Text('BUTTONS',
           style: Theme.of(context).textTheme.overline,
         ),
-        padding: EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
+        padding: const EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
       ),
       ListTile(
         title: ContainedPlatformButton(
-          label: Text('Contained'),
+          label: const Text('Contained'),
           onPressed: () {},
         ),
       ),
-      ListTile(
+      const ListTile(
         title: ContainedPlatformButton(
           label: Text('Contained Disabled'),
           onPressed: null,
@@ -29,11 +29,11 @@ class ComponentsTab extends StatelessWidget {
       ),
       ListTile(
         title: OutlinedPlatformButton(
-          label: Text('Outlined'),
+          label: const Text('Outlined'),
           onPressed: () {},
         ),
       ),
-      ListTile(
+      const ListTile(
         title: OutlinedPlatformButton(
           label: Text('Outlined Disabled'),
           onPressed: null,
@@ -41,17 +41,17 @@ class ComponentsTab extends StatelessWidget {
       ),
       ListTile(
         title: TextPlatformButton(
-          label: Text('Text'),
+          label: const Text('Text'),
           onPressed: () {},
         ),
       ),
-      ListTile(
+      const ListTile(
         title: TextPlatformButton(
           label: Text('Text Disabled'),
           onPressed: null,
         ),
       ),
-      Divider(),
+      const Divider(),
     ],
   );
 }

@@ -111,14 +111,14 @@ class _FadingSliverAppBarState extends State<FadingSliverAppBar> with TickerProv
   }
 
   /// Adds the scroll event listener if the AppBar is pinned.
-  setupScrollListener() {
+  void setupScrollListener() {
     if (widget.pinned) {
       widget.scrollController!.addListener(onScrollEvent);
     } 
   }
 
   /// Handles scroll events to force elevation on scroll.
-  onScrollEvent() {
+  void onScrollEvent() {
     if (widget.scrollController!.offset <= 0 && _forceElevated) {
       setState(() => _forceElevated = false);
     } else if (widget.scrollController!.offset > 0 && !_forceElevated) {
@@ -245,8 +245,8 @@ class _FadingSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return ToggleAnimationBuilder(
       forwards: forceElevated || overlapsContent,
-      duration: pinned ? Duration(milliseconds: 100) : Duration.zero,
-      reverseDuration: Duration(milliseconds: 150),
+      duration: pinned ? const Duration(milliseconds: 100) : Duration.zero,
+      reverseDuration: const Duration(milliseconds: 150),
       builder: (context, animationValue, child) => appBarBuilder(animationValue)
     );
   }

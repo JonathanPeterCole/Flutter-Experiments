@@ -105,8 +105,8 @@ class _PlatformTappableState extends State<PlatformTappable> with SingleTickerPr
         ? _animationController.forward()
         : _animationController.reverse();
       // When the animation ends, animate to the new state if the state has changed
-      bool wasPressed = _isPressed;
-      animationTicker.then((void _) {
+      final bool wasPressed = _isPressed;
+      animationTicker.then((_) {
         if (mounted && _isPressed != wasPressed) {
           _cupertinoAnimate();
         }
@@ -127,7 +127,7 @@ class _PlatformTappableState extends State<PlatformTappable> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     // Get the current platform
-    bool isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
+    final bool isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
     // Create the button wrapped in Semantics and TapTargetPadding for accessibility
     final Widget button = Semantics(
       container: true,

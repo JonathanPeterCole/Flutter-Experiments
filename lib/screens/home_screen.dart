@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/widgets/common/bars/fading_sliver_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key, this.title = 'Home'}) : super(key: key);
+  const HomeScreen({Key? key, this.title = 'Home'}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -50,14 +50,13 @@ class _MyHomePageState extends State<HomeScreen> {
       // ),
       primary: true,
       body: Builder(builder: (context) => CustomScrollView(
-        physics: BouncingScrollPhysics(),
         primary: true,
         slivers: [
           FadingSliverAppBar(
             context,
             pinned: true,
             scrollController: PrimaryScrollController.of(context),
-            title: Text('Hello'),
+            title: const Text('Hello'),
             centerTitle: true,
           ),
           SliverList(
@@ -102,7 +101,7 @@ class _MyHomePageState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

@@ -22,12 +22,12 @@ class TapTargetPadding extends SingleChildRenderObjectWidget {
 
   Size getPlatformMinSize(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
-      return Size(
+      return const Size(
         kMinInteractiveDimensionCupertino,
         kMinInteractiveDimensionCupertino,
       );
     } else {
-      return Size(
+      return const Size(
         kMinInteractiveDimension,
         kMinInteractiveDimension,
       );
@@ -124,7 +124,7 @@ class _RenderInputPadding extends RenderShiftedBox {
     return result.addWithRawTransform(
       transform: MatrixUtils.forceToPoint(center),
       position: center,
-      hitTest: (BoxHitTestResult result, Offset? position) {
+      hitTest: (result, position) {
         assert(position == center);
         return child!.hitTest(result, position: center);
       },

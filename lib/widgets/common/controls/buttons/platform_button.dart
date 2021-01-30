@@ -7,7 +7,7 @@ import 'package:flutter_experiments/widgets/common/controls/buttons/platform_tap
 /// child theming to match the current platform.
 class PlatformButton extends StatefulWidget {
 
-  PlatformButton({
+  const PlatformButton({
     Key? key,
     this.onPressed,
     required this.label,
@@ -88,7 +88,7 @@ class _PlatformButtonState extends State<PlatformButton> {
     // Build the button
     return AnimatedOpacity(
       opacity: _isDisabled ? 0.38 : 1.0,
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       child: PlatformTappable(
         onTap: widget.onPressed,
         color: widget.color,
@@ -99,8 +99,8 @@ class _PlatformButtonState extends State<PlatformButton> {
         onFocusChanged: (focused) => setState(() => _isFocused = focused),
         onHighlightChanged: (pressed) => setState(() => _isPressed = pressed),
         constraints: isCupertino
-          ? BoxConstraints(minWidth: 48.0, minHeight: 48.0)
-          : BoxConstraints(minWidth: 88.0, minHeight: 36.0),
+          ? const BoxConstraints(minWidth: 48.0, minHeight: 48.0)
+          : const BoxConstraints(minWidth: 88.0, minHeight: 36.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(isCupertino ? 8.0 : 4.0),
           side: widget.borderSide ?? BorderSide.none,

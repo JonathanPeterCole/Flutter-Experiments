@@ -8,8 +8,8 @@ class CustomTheme extends InheritedWidget {
     required Widget child,
     CustomThemeData? theme,
     CustomThemeData? darkTheme
-  }) : this.lightTheme = theme ?? const CustomThemeData.light(),
-       this.darkTheme = darkTheme ?? const CustomThemeData.dark(),
+  }) : lightTheme = theme ?? const CustomThemeData.light(),
+       darkTheme = darkTheme ?? const CustomThemeData.dark(),
        super(key: key, child: child);
 
   /// The light theme.
@@ -26,9 +26,9 @@ class CustomTheme extends InheritedWidget {
   /// 
   /// If there's no CustomTheme widget in the tree, the default theme will be returned instead.
   static CustomThemeData of(BuildContext context) {
-    CustomTheme? instance = context.dependOnInheritedWidgetOfExactType<CustomTheme>();
+    final CustomTheme? instance = context.dependOnInheritedWidgetOfExactType<CustomTheme>();
     return MediaQuery.of(context).platformBrightness == Brightness.light
-      ? instance?.lightTheme ?? CustomThemeData.light()
-      : instance?.darkTheme ?? CustomThemeData.dark();
+      ? instance?.lightTheme ?? const CustomThemeData.light()
+      : instance?.darkTheme ?? const CustomThemeData.dark();
   }
 }

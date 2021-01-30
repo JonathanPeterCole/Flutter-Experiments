@@ -105,73 +105,73 @@ class CustomThemeData {
   /// Generate a material theme from the palette
   ThemeData get materialTheme {
     // Get the default color scheme based on the brightness
-    ColorScheme defaultColorScheme = brightness == Brightness.light ? ColorScheme.light() : ColorScheme.dark();
-    ThemeData defaultThemeData = brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
-    CupertinoTextThemeData defaultCupertinoTextThemeData = CupertinoTextThemeData();
+    final ColorScheme defaultColorScheme = brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark();
+    final ThemeData defaultThemeData = brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
+    const CupertinoTextThemeData defaultCupertinoTextThemeData = CupertinoTextThemeData();
     // Create the theme data
     return ThemeData(
       brightness: brightness,
       colorScheme: defaultColorScheme.copyWith(
-        primary: this.primary,
-        secondary: this.secondary,
-        background: this.background,
-        surface: this.surface,
+        primary: primary,
+        secondary: secondary,
+        background: background,
+        surface: surface,
       ),
-      primaryColor: this.primary,
-      accentColor: this.secondary,
-      scaffoldBackgroundColor: this.background,
-      canvasColor: this.surface,
-      cardColor: this.surface,
-      dividerColor: this.divider,
+      primaryColor: primary,
+      accentColor: secondary,
+      scaffoldBackgroundColor: background,
+      canvasColor: surface,
+      cardColor: surface,
+      dividerColor: divider,
       // Inkwell & Button Theming
       splashFactory: InkRipple.splashFactory,
       splashColor: defaultThemeData.platform == TargetPlatform.iOS
-        ? Colors.transparent : this.highlight,
-      highlightColor: this.highlight,
-      buttonColor: this.primary,
-      buttonTheme: ButtonThemeData(
+        ? Colors.transparent : highlight,
+      highlightColor: highlight,
+      buttonColor: primary,
+      buttonTheme: const ButtonThemeData(
         textTheme: ButtonTextTheme.primary
       ),
       // Text Theming
       primaryTextTheme: defaultThemeData.textTheme.apply(
-        bodyColor: this.textPrimary,
-        displayColor: this.textPrimary,
+        bodyColor: textPrimary,
+        displayColor: textPrimary,
       ),
       // AppBar Theming
       appBarTheme: AppBarTheme(
-        color: this.surface,
-        shadowColor: this.shadow,
-        brightness: this.brightness,
+        color: surface,
+        shadowColor: shadow,
+        brightness: brightness,
         iconTheme: IconThemeData(
-          color: this.textPrimary
+          color: textPrimary
         ),
         actionsIconTheme: IconThemeData(
-          color: this.textPrimary
+          color: textPrimary
         )
       ),
       // FAB Theming
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        foregroundColor: this.onPrimary,
+        foregroundColor: onPrimary,
       ),
       // Bottom Nav Theming
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        selectedItemColor: this.primary,
-        unselectedItemColor: this.textSecondary,
+        selectedItemColor: primary,
+        unselectedItemColor: textSecondary,
       ),
       // Snackbar Theming
-      snackBarTheme: SnackBarThemeData(
+      snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
       ),
       // Cupertino Styles
       cupertinoOverrideTheme: CupertinoThemeData(
-        brightness: this.brightness,
-        primaryColor: this.primary,
-        primaryContrastingColor: this.onPrimary,
-        barBackgroundColor: this.surface,
-        scaffoldBackgroundColor: this.background,
+        brightness: brightness,
+        primaryColor: primary,
+        primaryContrastingColor: onPrimary,
+        barBackgroundColor: surface,
+        scaffoldBackgroundColor: background,
         textTheme: defaultCupertinoTextThemeData.copyWith(
-          primaryColor: this.textPrimary,
-          navTitleTextStyle: defaultCupertinoTextThemeData.navTitleTextStyle.copyWith(color: this.textPrimary)
+          primaryColor: textPrimary,
+          navTitleTextStyle: defaultCupertinoTextThemeData.navTitleTextStyle.copyWith(color: textPrimary)
         )
       )
     );
