@@ -48,7 +48,16 @@ class LayoutsTab extends StatelessWidget {
             onTap: () => Navigator.push<Widget>(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PlatformTabBarDemoScreen(),
+                  builder: (context) => const PlatformTabBarDemoScreen(),
+                )),
+          ),
+          ListTile(
+            leading: const Icon(Icons.fast_forward_rounded),
+            title: const Text('Scrolling Tabs'),
+            onTap: () => Navigator.push<Widget>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PlatformTabBarDemoScreen(scrolling: true),
                 )),
           ),
         ],

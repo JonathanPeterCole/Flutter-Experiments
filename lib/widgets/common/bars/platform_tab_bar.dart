@@ -8,10 +8,12 @@ class PlatformTabBar extends StatelessWidget implements PreferredSizeWidget {
   const PlatformTabBar({
     Key? key,
     this.controller,
+    this.scrolling = false,
     required this.tabs,
   }) : super(key: key);
 
   final TabController? controller;
+  final bool scrolling;
   final List<Widget> tabs;
 
   @override
@@ -22,9 +24,15 @@ class PlatformTabBar extends StatelessWidget implements PreferredSizeWidget {
     final bool isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
     return TabBar(
       controller: controller,
-      indicator:
-          isCupertino ? CupertinoTabIndicator(color: CustomTheme.of(context).background) : null,
-      indicatorSize: isCupertino ? TabBarIndicatorSize.label : TabBarIndicatorSize.tab,
+      isScrollable: scrolling,
+      labelPadding: scrolling && isCupertino ? const EdgeInsets.symmetric(horizontal: 20) : null,
+      indicator: isCupertino
+          ? CupertinoTabIndicator(
+              color: CustomTheme.of(context).background,
+              scrolling: scrolling,
+            )
+          : null,
+      indicatorSize: scrolling && isCupertino ? TabBarIndicatorSize.label : TabBarIndicatorSize.tab,
       tabs: tabs,
     );
   }
@@ -35,9 +43,11 @@ class PlatformTabBar extends StatelessWidget implements PreferredSizeWidget {
 class CupertinoTabIndicator extends Decoration {
   const CupertinoTabIndicator({
     required this.color,
+    required this.scrolling,
   });
 
   final Color color;
+  final bool scrolling;
 
   @override
   _CupertinoTabIndicatorPainter createBoxPainter([VoidCallback? onChanged]) =>
@@ -54,8 +64,10 @@ class _CupertinoTabIndicatorPainter extends BoxPainter {
     // Get the indicator size
     final Rect indicatorSize =
         Offset(offset.dx, configuration.size!.height / 2) & Size(configuration.size!.width, 0);
+    final double horizontalPadding = decoration.scrolling ? 10 : -12;
     final Rect paddedIndicatorSize =
-        const EdgeInsets.only(top: 16, right: 12, bottom: 14, left: 12).inflateRect(indicatorSize);
+        EdgeInsets.only(top: 14, right: horizontalPadding, bottom: 12, left: horizontalPadding)
+            .inflateRect(indicatorSize);
     // Get the paint style
     final Paint paint = Paint()
       ..color = decoration.color
