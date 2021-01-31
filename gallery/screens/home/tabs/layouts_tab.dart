@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../demos/layout_demos/fading_sliver_app_bar_demo.dart';
+import '../../demos/layout_demos/platform_tab_bar_demo.dart';
 
 class LayoutsTab extends StatelessWidget {
   @override
@@ -34,6 +35,22 @@ class LayoutsTab extends StatelessWidget {
                 )),
           ),
           const Divider(),
+          Padding(
+            child: Text(
+              'PLATFORM TAB BAR',
+              style: Theme.of(context).textTheme.overline,
+            ),
+            padding: const EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
+          ),
+          ListTile(
+            leading: const Icon(Icons.tab),
+            title: const Text('Tabs'),
+            onTap: () => Navigator.push<Widget>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlatformTabBarDemoScreen(),
+                )),
+          ),
         ],
       );
 }
