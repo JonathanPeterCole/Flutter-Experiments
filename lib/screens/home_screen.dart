@@ -49,25 +49,22 @@ class _MyHomePageState extends State<HomeScreen> {
       //   title: Text(widget.title),
       // ),
       primary: true,
-      body: Builder(builder: (context) => CustomScrollView(
+      body: CustomScrollView(
         primary: true,
         slivers: [
-          FadingSliverAppBar(
-            context,
+          const FadingSliverAppBar(
             pinned: true,
-            scrollController: PrimaryScrollController.of(context),
-            title: const Text('Hello'),
+            title: Text('Hello'),
             centerTitle: true,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => ListTile(title: Text('Tile ' + index.toString())),
-              childCount: 30
-            )
-          )
+                (context, index) => ListTile(title: Text('Tile ' + index.toString())),
+                childCount: 30),
+          ),
         ],
-      )),
-      
+      ),
+
       // Center(
       //   // Center is a layout widget. It takes a single child and positions it
       //   // in the middle of the parent.
