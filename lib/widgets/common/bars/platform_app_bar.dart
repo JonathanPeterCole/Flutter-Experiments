@@ -43,9 +43,9 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isCupertino;
 
   @override
-  Size get preferredSize => Size.fromHeight(isCupertino
-      ? kMinInteractiveDimensionCupertino + (bottom?.preferredSize.height ?? 0.0)
-      : kToolbarHeight);
+  Size get preferredSize =>
+      Size.fromHeight((isCupertino ? kMinInteractiveDimensionCupertino : kToolbarHeight) +
+          (bottom?.preferredSize.height ?? 0.0));
 
   @override
   Widget build(BuildContext context) =>
@@ -59,18 +59,26 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: centerTitle,
       );
 
-  Widget cupertinoAppBar(BuildContext context) => CupertinoNavigationBar(
-        middle: title,
-        trailing: actions != null
-            ? Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: actions!,
-              )
-            : null,
-        previousPageTitle: backButtonText,
-        actionsForegroundColor: CustomTheme.of(context).primary,
-        backgroundColor: backgroundColor ?? CustomTheme.of(context).surface,
-        border: Border.all(style: BorderStyle.none),
+  Widget cupertinoAppBar(BuildContext context) => PhysicalModel(
+        color: backgroundColor ?? CustomTheme.of(context).surface,
+        child: Column(
+          children: [
+            CupertinoNavigationBar(
+              middle: title,
+              trailing: actions != null
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: actions!,
+                    )
+                  : null,
+              previousPageTitle: backButtonText,
+              actionsForegroundColor: CustomTheme.of(context).primary,
+              backgroundColor: backgroundColor ?? CustomTheme.of(context).surface,
+              border: Border.all(style: BorderStyle.none),
+            ),
+            if (bottom != null) bottom!,
+          ],
+        ),
       );
 }
