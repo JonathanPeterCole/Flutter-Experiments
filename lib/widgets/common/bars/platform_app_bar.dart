@@ -4,11 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
 
 /// A custom AppBar that adapts to the platform.
-/// 
+///
 /// Displays a Material AppBar on Android, and a CupertinoNavigationBar on iOS.
 class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
-
-  PlatformAppBar(BuildContext context, {
+  PlatformAppBar(
+    BuildContext context, {
     Key? key,
     this.title,
     this.actions,
@@ -16,8 +16,8 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.backButtonText,
     this.centerTitle,
-  }) : platform = Theme.of(context).platform,
-       super(key: key);
+  })  : isCupertino = Theme.of(context).platform == TargetPlatform.iOS,
+        super(key: key);
 
   /// The primary widget displayed in the app bar.
   final Widget? title;
@@ -39,36 +39,38 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Only applies to Android. On iOS this will always be true.
   final bool? centerTitle;
 
-  /// The current platform.
-  final TargetPlatform platform;
+  /// Whether or not the app is running on iOS.
+  final bool isCupertino;
 
   @override
-  Size get preferredSize => Size.fromHeight(
-    (platform == TargetPlatform.android ? kToolbarHeight : kMinInteractiveDimensionCupertino) + 
-    (bottom?.preferredSize.height ?? 0.0));
+  Size get preferredSize => Size.fromHeight(isCupertino
+      ? kMinInteractiveDimensionCupertino + (bottom?.preferredSize.height ?? 0.0)
+      : kToolbarHeight);
 
   @override
-  Widget build(BuildContext context) => platform == TargetPlatform.android 
-    ? materialAppBar(context) : cupertinoAppBar(context);
+  Widget build(BuildContext context) =>
+      isCupertino ? cupertinoAppBar(context) : materialAppBar(context);
 
   Widget materialAppBar(BuildContext context) => AppBar(
-    title: title,
-    actions: actions,
-    bottom: bottom,
-    backgroundColor: backgroundColor ?? CustomTheme.of(context).surface,
-    centerTitle: centerTitle,
-  );
+        title: title,
+        actions: actions,
+        bottom: bottom,
+        backgroundColor: backgroundColor ?? CustomTheme.of(context).surface,
+        centerTitle: centerTitle,
+      );
 
   Widget cupertinoAppBar(BuildContext context) => CupertinoNavigationBar(
-    middle: title,
-    trailing: actions != null ? Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: actions!,
-    ) : null,
-    previousPageTitle: backButtonText,
-    actionsForegroundColor: CustomTheme.of(context).primary,
-    backgroundColor: (backgroundColor ?? CustomTheme.of(context).surface).withOpacity(0.8),
-    border: Border.all(style: BorderStyle.none),
-  );
+        middle: title,
+        trailing: actions != null
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: actions!,
+              )
+            : null,
+        previousPageTitle: backButtonText,
+        actionsForegroundColor: CustomTheme.of(context).primary,
+        backgroundColor: backgroundColor ?? CustomTheme.of(context).surface,
+        border: Border.all(style: BorderStyle.none),
+      );
 }
