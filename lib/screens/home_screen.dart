@@ -59,8 +59,9 @@ class _MyHomePageState extends State<HomeScreen> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                (context, index) => ListTile(title: Text('Tile ' + index.toString())),
-                childCount: 30),
+              (context, index) => ListTile(title: Text('Tile ' + index.toString())),
+              childCount: 30,
+            ),
           ),
         ],
       ),
