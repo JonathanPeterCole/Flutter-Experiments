@@ -27,11 +27,9 @@ class PlatformTabBar extends StatelessWidget implements PreferredSizeWidget {
       isScrollable: scrolling,
       labelPadding: scrolling && isCupertino ? const EdgeInsets.symmetric(horizontal: 20) : null,
       indicator: isCupertino
-          ? CupertinoTabIndicator(
-              color: CustomTheme.of(context).background,
-              scrolling: scrolling,
-            )
+          ? CupertinoTabIndicator(color: CustomTheme.of(context).background, scrolling: scrolling)
           : null,
+      indicatorColor: CustomTheme.of(context).textPrimary,
       indicatorSize: scrolling && isCupertino ? TabBarIndicatorSize.label : TabBarIndicatorSize.tab,
       tabs: tabs,
     );
