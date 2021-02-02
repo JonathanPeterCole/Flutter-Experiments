@@ -39,10 +39,10 @@ class MyApp extends StatelessWidget {
             return AnnotatedRegion<SystemUiOverlayStyle>(
               child: child!,
               value: SystemUiOverlayStyle(
-                  statusBarColor: Colors.transparent,
-                  statusBarBrightness: brightness,
-                  statusBarIconBrightness: inverseBrightness,
-                  systemNavigationBarIconBrightness: inverseBrightness),
+                statusBarColor: Colors.transparent,
+                statusBarBrightness: brightness,
+                statusBarIconBrightness: inverseBrightness,
+              ),
             );
           },
           home: const HomeScreen(title: 'Flutter Experiments'),

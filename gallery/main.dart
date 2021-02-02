@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
                 statusBarColor: Colors.transparent,
                 statusBarBrightness: brightness,
                 statusBarIconBrightness: inverseBrightness,
-                systemNavigationBarIconBrightness: inverseBrightness,
               ),
             );
           },
