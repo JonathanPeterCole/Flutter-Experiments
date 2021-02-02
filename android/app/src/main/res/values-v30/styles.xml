@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Make the navigation bar transparent on Android SDK 30+, as Flutter can draw behind it. -->
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+         <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

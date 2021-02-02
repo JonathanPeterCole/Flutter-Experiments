@@ -40,15 +40,17 @@ class FixedBottomSheetLayout extends StatelessWidget {
           Material(
             elevation: 8,
             color: CustomTheme.of(context).surface,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (leading != null) _buildLeading(context),
-                  if (leading != null && buttons != null) const SizedBox(height: 4),
-                  if (buttons != null) ButtonList(buttons: buttons!),
-                ],
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (leading != null) _buildLeading(context),
+                    if (leading != null && buttons != null) const SizedBox(height: 4),
+                    if (buttons != null) ButtonList(buttons: buttons!),
+                  ],
+                ),
               ),
             ),
           ),

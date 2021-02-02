@@ -27,28 +27,25 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => CustomTheme(
-    child: MaterialApp(
-      title: 'Flutter Experiments',
-      theme: const CustomThemeData.light().materialTheme,
-      darkTheme: const CustomThemeData.dark().materialTheme,
-      builder: (context, child) {
-        // Get the platform brightness
-        final Brightness brightness = CustomTheme.of(context).brightness;
-        final Brightness inverseBrightness = brightness == Brightness.light
-            ? Brightness.dark
-            : Brightness.light;
-        return AnnotatedRegion<SystemUiOverlayStyle>(
-          child: child!,
-          value: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarBrightness: brightness,
-            statusBarIconBrightness: inverseBrightness,
-            systemNavigationBarColor: CustomTheme.of(context).surface,
-            systemNavigationBarIconBrightness: inverseBrightness
-          ),
-        );
-      },
-      home: const HomeScreen(title: 'Flutter Experiments'),
-    ),
-  );
+        child: MaterialApp(
+          title: 'Flutter Experiments',
+          theme: const CustomThemeData.light().materialTheme,
+          darkTheme: const CustomThemeData.dark().materialTheme,
+          builder: (context, child) {
+            // Get the platform brightness
+            final Brightness brightness = CustomTheme.of(context).brightness;
+            final Brightness inverseBrightness =
+                brightness == Brightness.light ? Brightness.dark : Brightness.light;
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              child: child!,
+              value: SystemUiOverlayStyle(
+                  statusBarColor: Colors.transparent,
+                  statusBarBrightness: brightness,
+                  statusBarIconBrightness: inverseBrightness,
+                  systemNavigationBarIconBrightness: inverseBrightness),
+            );
+          },
+          home: const HomeScreen(title: 'Flutter Experiments'),
+        ),
+      );
 }

@@ -38,11 +38,11 @@ class MyApp extends StatelessWidget {
             return AnnotatedRegion<SystemUiOverlayStyle>(
               child: child!,
               value: SystemUiOverlayStyle(
-                  statusBarColor: Colors.transparent,
-                  statusBarBrightness: brightness,
-                  statusBarIconBrightness: inverseBrightness,
-                  systemNavigationBarColor: CustomTheme.of(context).surface,
-                  systemNavigationBarIconBrightness: inverseBrightness),
+                statusBarColor: Colors.transparent,
+                statusBarBrightness: brightness,
+                statusBarIconBrightness: inverseBrightness,
+                systemNavigationBarIconBrightness: inverseBrightness,
+              ),
             );
           },
           home: GalleryTabsPage(),

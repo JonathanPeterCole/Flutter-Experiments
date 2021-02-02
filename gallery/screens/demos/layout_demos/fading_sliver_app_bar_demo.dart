@@ -16,10 +16,13 @@ class FadingSliverAppBarDemoScreen extends StatelessWidget {
               title: const Text('FadingSliverAppBar Demo'),
               centerTitle: true,
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                  (context, index) => const ListTile(title: Text('Example SliverList')),
-                  childCount: 30),
+            SliverSafeArea(
+              top: false,
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (context, index) => const ListTile(title: Text('Example SliverList')),
+                    childCount: 30),
+              ),
             ),
           ],
         ),
