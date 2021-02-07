@@ -127,7 +127,6 @@ class FadingSliverAppBar extends StatelessWidget {
                 children: actions!,
               )
             : null,
-        actionsForegroundColor: CustomTheme.of(context).primary,
         border: Border.all(style: BorderStyle.none),
         backgroundColor: backgroundColor,
       );

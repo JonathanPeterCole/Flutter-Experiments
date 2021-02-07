@@ -105,8 +105,10 @@ class CustomThemeData {
   /// Generate a material theme from the palette
   ThemeData get materialTheme {
     // Get the default color scheme based on the brightness
-    final ColorScheme defaultColorScheme = brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark();
-    final ThemeData defaultThemeData = brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
+    final ColorScheme defaultColorScheme =
+        brightness == Brightness.light ? const ColorScheme.light() : const ColorScheme.dark();
+    final ThemeData defaultThemeData =
+        brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
     const CupertinoTextThemeData defaultCupertinoTextThemeData = CupertinoTextThemeData();
     // Create the theme data
     return ThemeData(
@@ -125,13 +127,10 @@ class CustomThemeData {
       dividerColor: divider,
       // Inkwell & Button Theming
       splashFactory: InkRipple.splashFactory,
-      splashColor: defaultThemeData.platform == TargetPlatform.iOS
-        ? Colors.transparent : highlight,
+      splashColor: defaultThemeData.platform == TargetPlatform.iOS ? Colors.transparent : highlight,
       highlightColor: highlight,
       buttonColor: primary,
-      buttonTheme: const ButtonThemeData(
-        textTheme: ButtonTextTheme.primary
-      ),
+      buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
       // Text Theming
       primaryTextTheme: defaultThemeData.textTheme.apply(
         bodyColor: textPrimary,
@@ -142,12 +141,8 @@ class CustomThemeData {
         color: surface,
         shadowColor: shadow,
         brightness: brightness,
-        iconTheme: IconThemeData(
-          color: textPrimary
-        ),
-        actionsIconTheme: IconThemeData(
-          color: textPrimary
-        )
+        iconTheme: IconThemeData(color: textPrimary),
+        actionsIconTheme: IconThemeData(color: textPrimary),
       ),
       // FAB Theming
       floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -171,9 +166,10 @@ class CustomThemeData {
         scaffoldBackgroundColor: background,
         textTheme: defaultCupertinoTextThemeData.copyWith(
           primaryColor: textPrimary,
-          navTitleTextStyle: defaultCupertinoTextThemeData.navTitleTextStyle.copyWith(color: textPrimary)
-        )
-      )
+          navTitleTextStyle:
+              defaultCupertinoTextThemeData.navTitleTextStyle.copyWith(color: textPrimary),
+        ),
+      ),
     );
   }
 }

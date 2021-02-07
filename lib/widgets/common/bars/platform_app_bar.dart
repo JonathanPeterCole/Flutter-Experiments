@@ -73,7 +73,6 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
                     )
                   : null,
               previousPageTitle: backButtonText,
-              actionsForegroundColor: CustomTheme.of(context).primary,
               backgroundColor: backgroundColor ?? CustomTheme.of(context).surface,
               border: Border.all(style: BorderStyle.none),
             ),
