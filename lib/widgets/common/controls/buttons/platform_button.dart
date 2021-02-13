@@ -2,14 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
 import 'package:flutter_experiments/widgets/common/controls/buttons/platform_tappable.dart';
+import 'package:flutter_experiments/widgets/common/progress_indicators/platform_spinner.dart';
 
-/// Creates a standard button with support for icons and labels, adapting the border-radius and 
+const Duration _loadingTransitionDuration = Duration(milliseconds: 100);
+
+/// Creates a standard button with support for icons and labels, adapting the border-radius and
 /// child theming to match the current platform.
 class PlatformButton extends StatefulWidget {
-
   const PlatformButton({
     Key? key,
     this.onPressed,
+    this.loading,
     required this.label,
     this.leadingIcon,
     this.trailingIcon,
@@ -26,28 +29,43 @@ class PlatformButton extends StatefulWidget {
 
   /// Called when the button has been pressed.
   final VoidCallback? onPressed;
+
+  /// Whether or not the button should display a loading spinner.
+  final bool? loading;
+
   /// The child widget.
   final Widget label;
+
   /// The icon to display to the left of the child widget.
   final Widget? leadingIcon;
+
   /// The icon to display to the right of the child widget.
   final Widget? trailingIcon;
+
   /// The button color.
   final Color color;
+
   /// The button foreground color. Defaults to the CustomTheme primary color.
   final Color? foregroundColor;
+
   /// The color to overlay when focused.
   final Color? focusColor;
+
   /// The color to overlay when pressed.
   final Color? highlightColor;
+
   /// The button's Material elevation.
   final double elevation;
+
   /// The elevation to use when the button is focused.
   final double? focusElevation;
+
   /// The elevation to use when the button is pressed.
   final double? highlightElevation;
+
   /// The elevation to use when the button is disabled.
   final double? disabledElevation;
+
   /// The borders to apply to the button.
   final BorderSide? borderSide;
 
@@ -85,12 +103,18 @@ class _PlatformButtonState extends State<PlatformButton> {
     // Get the target platform and foreground color
     final bool isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
     final Color foregroundColor = widget.foregroundColor ?? CustomTheme.of(context).primary;
+    // Get the themed button content
+    final Widget content = childThemes(
+      isCupertino: isCupertino,
+      foregroundColor: foregroundColor,
+      child: buttonContent(),
+    );
     // Build the button
     return AnimatedOpacity(
       opacity: _isDisabled ? 0.38 : 1.0,
       duration: const Duration(milliseconds: 100),
       child: PlatformTappable(
-        onTap: widget.onPressed,
+        onTap: widget.loading != true ? widget.onPressed : null,
         color: widget.color,
         splashColor: foregroundColor.withOpacity(0.12),
         focusColor: widget.focusColor,
@@ -99,58 +123,82 @@ class _PlatformButtonState extends State<PlatformButton> {
         onFocusChanged: (focused) => setState(() => _isFocused = focused),
         onHighlightChanged: (pressed) => setState(() => _isPressed = pressed),
         constraints: isCupertino
-          ? const BoxConstraints(minWidth: 48.0, minHeight: 48.0)
-          : const BoxConstraints(minWidth: 88.0, minHeight: 36.0),
+            ? const BoxConstraints(minWidth: 48.0, minHeight: 48.0)
+            : const BoxConstraints(minWidth: 88.0, minHeight: 36.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(isCupertino ? 8.0 : 4.0),
           side: widget.borderSide ?? BorderSide.none,
         ),
-        child: childThemes(
-          isCupertino: isCupertino,
-          foregroundColor: foregroundColor,
-          child: buttonContent(),
-        ),
+        child: widget.loading == null
+            ? content
+            : loadingWrapper(
+                isCupertino: isCupertino, foregroundColor: foregroundColor, child: content),
       ),
     );
   }
 
+  /// Wraps the child widget with a loading spinner overlay.
+  Widget loadingWrapper(
+          {required bool isCupertino, required Color foregroundColor, required Widget child}) =>
+      Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          AnimatedOpacity(
+            opacity: widget.loading! ? 0 : 1,
+            duration: _loadingTransitionDuration,
+            child: child,
+          ),
+          AnimatedOpacity(
+            opacity: widget.loading! ? 1 : 0,
+            duration: _loadingTransitionDuration,
+            child: PlatformSpinner(
+              diameter: isCupertino ? 24 : 20,
+              weight: 2,
+              color: foregroundColor,
+            ),
+          ),
+        ],
+      );
+
   /// Builds the text style and icon theme for the button children.
-  Widget childThemes({
-    required bool isCupertino, 
-    required Color foregroundColor, 
-    required Widget child
-  }) => DefaultTextStyle(
-    style: TextStyle(
-      color: foregroundColor,
-      fontSize: isCupertino ? 17.0 : 14.0,
-      fontWeight: isCupertino ? null : FontWeight.w500,
-      letterSpacing: isCupertino ? -0.4 : null,
-    ),
-    child: IconTheme(
-      data: IconThemeData(
-        color: foregroundColor
-      ),
-      child: child,
-    ),
-  );
+  Widget childThemes(
+          {required bool isCupertino, required Color foregroundColor, required Widget child}) =>
+      DefaultTextStyle(
+        style: TextStyle(
+          color: foregroundColor,
+          fontSize: isCupertino ? 17.0 : 14.0,
+          fontWeight: isCupertino ? null : FontWeight.w500,
+          letterSpacing: isCupertino ? -0.4 : null,
+        ),
+        child: IconTheme(
+          data: IconThemeData(color: foregroundColor),
+          child: child,
+        ),
+      );
 
   /// Builds the button content.
   Widget buttonContent() => Padding(
-    padding: EdgeInsetsDirectional.only(
-      start: widget.leadingIcon == null ? 16 : 12.0, 
-      end: widget.trailingIcon == null ? 16 : 12.0,
-    ),
-    child: Center(
-      widthFactor: 1.0,
-      heightFactor: 1.0,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          if (widget.leadingIcon != null) ...[widget.leadingIcon!, const SizedBox(width: 8.0)],
-          widget.label,
-          if (widget.trailingIcon != null) ...[const SizedBox(width: 8.0), widget.trailingIcon!],
-        ],
-      ),
-    ),
-  );
+        padding: EdgeInsetsDirectional.only(
+          start: widget.leadingIcon == null ? 16 : 12.0,
+          end: widget.trailingIcon == null ? 16 : 12.0,
+        ),
+        child: Center(
+          widthFactor: 1.0,
+          heightFactor: 1.0,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              if (widget.leadingIcon != null) ...[
+                widget.leadingIcon!,
+                const SizedBox(width: 8.0),
+              ],
+              widget.label,
+              if (widget.trailingIcon != null) ...[
+                const SizedBox(width: 8.0),
+                widget.trailingIcon!
+              ],
+            ],
+          ),
+        ),
+      );
 }
