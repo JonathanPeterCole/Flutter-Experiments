@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_experiments/widgets/common/bars/fading_sliver_app_bar.dart';
+import 'package:flutter_experiments/widgets/bars/fading_sliver_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, this.title = 'Home'}) : super(key: key);

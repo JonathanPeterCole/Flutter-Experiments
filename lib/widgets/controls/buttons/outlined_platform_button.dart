@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/platform_button.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/platform_button.dart';
 
-class TextPlatformButton extends StatelessWidget {
-  const TextPlatformButton({
+class OutlinedPlatformButton extends StatelessWidget {
+  const OutlinedPlatformButton({
     Key? key,
     required this.onPressed,
     required this.label,
@@ -27,5 +27,6 @@ class TextPlatformButton extends StatelessWidget {
         leadingIcon: leadingIcon,
         trailingIcon: trailingIcon,
         focusColor: CustomTheme.of(context).primary.withOpacity(0.12),
+        borderSide: BorderSide(width: 1, color: CustomTheme.of(context).primary),
       );
 }

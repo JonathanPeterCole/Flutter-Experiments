@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_experiments/widgets/common/bars/platform_app_bar.dart';
-import 'package:flutter_experiments/widgets/common/bars/platform_tab_bar.dart';
+import 'package:flutter_experiments/widgets/bars/platform_app_bar.dart';
+import 'package:flutter_experiments/widgets/bars/platform_tab_bar.dart';
 
 class PlatformTabBarDemoScreen extends StatelessWidget {
   const PlatformTabBarDemoScreen({

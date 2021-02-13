@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_experiments/widgets/common/bars/platform_app_bar.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/contained_button.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/text_platform_button.dart';
-import 'package:flutter_experiments/widgets/common/layouts/fixed_bottom_sheet_layout.dart';
+import 'package:flutter_experiments/widgets/bars/platform_app_bar.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/contained_button.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/text_platform_button.dart';
+import 'package:flutter_experiments/widgets/layouts/fixed_bottom_sheet_layout.dart';
 
 class FixedBottomSheetDemoScreen extends StatelessWidget {
   const FixedBottomSheetDemoScreen({Key? key}) : super(key: key);

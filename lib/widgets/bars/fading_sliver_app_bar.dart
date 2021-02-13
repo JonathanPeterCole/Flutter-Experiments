@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
-import 'package:flutter_experiments/widgets/common/animation/toggle_animation_builder.dart';
+import 'package:flutter_experiments/widgets/animation/toggle_animation_builder.dart';
 
 /// A custom Sliver AppBar that blends in with the page background until the user scrolls.
 ///

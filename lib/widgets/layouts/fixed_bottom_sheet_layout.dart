@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
-import 'package:flutter_experiments/widgets/common/layouts/button_list.dart';
+import 'package:flutter_experiments/widgets/layouts/button_list.dart';
 
 /// Displays a fixed bottom sheet below a page body.
 class FixedBottomSheetLayout extends StatelessWidget {

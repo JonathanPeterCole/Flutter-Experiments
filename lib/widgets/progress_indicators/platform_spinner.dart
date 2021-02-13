@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
-import 'package:flutter_experiments/widgets/common/progress_indicators/custom_cupertino_activity_indicator.dart';
+import 'package:flutter_experiments/widgets/progress_indicators/custom_cupertino_activity_indicator.dart';
 
 /// An indeterminate progress indicator that adapts to the current platform.
 ///

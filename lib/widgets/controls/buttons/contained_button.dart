@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/platform_button.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/platform_button.dart';
 
 class ContainedPlatformButton extends StatelessWidget {
   const ContainedPlatformButton({

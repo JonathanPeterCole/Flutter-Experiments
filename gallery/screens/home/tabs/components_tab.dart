@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/outlined_platform_button.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/contained_button.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/text_platform_button.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/outlined_platform_button.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/contained_button.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/text_platform_button.dart';
 
 class ComponentsTab extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/platform_tappable.dart';
-import 'package:flutter_experiments/widgets/common/progress_indicators/platform_spinner.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/platform_tappable.dart';
+import 'package:flutter_experiments/widgets/progress_indicators/platform_spinner.dart';
 
 const Duration _loadingTransitionDuration = Duration(milliseconds: 100);
 

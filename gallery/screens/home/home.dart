@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_experiments/widgets/common/animation/indexed_transition_switcher.dart';
-import 'package:flutter_experiments/widgets/common/bars/platform_app_bar.dart';
-import 'package:flutter_experiments/widgets/common/bars/platform_bottom_navigation_bar.dart';
+import 'package:flutter_experiments/widgets/animation/indexed_transition_switcher.dart';
+import 'package:flutter_experiments/widgets/bars/platform_app_bar.dart';
+import 'package:flutter_experiments/widgets/bars/platform_bottom_navigation_bar.dart';
 
 import './tabs/components_tab.dart';
 import './tabs/layouts_tab.dart';

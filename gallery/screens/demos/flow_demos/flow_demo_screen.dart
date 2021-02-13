@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_experiments/widgets/common/bars/platform_app_bar.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/contained_button.dart';
-import 'package:flutter_experiments/widgets/common/controls/buttons/text_platform_button.dart';
+import 'package:flutter_experiments/widgets/bars/platform_app_bar.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/contained_button.dart';
+import 'package:flutter_experiments/widgets/controls/buttons/text_platform_button.dart';
 
 class FlowDemoScreen extends StatelessWidget {
   const FlowDemoScreen({Key? key, required this.onFinish}) : super(key: key);
