@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
 import 'package:flutter_experiments/theme/custom_theme_data.dart';
 import 'package:flutter_experiments/utils/environment/environment.dart';
+import 'package:flutter_experiments/widgets/navigation/custom_navigator.dart';
 
 import 'screens/home/home.dart';
 
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Experiments Gallery',
           theme: const CustomThemeData.light().materialTheme,
           darkTheme: const CustomThemeData.dark().materialTheme,
+          home: CustomNavigator(
+            initialPages: [GalleryTabsPage()],
+          ),
           builder: (context, child) {
             // Get the platform brightness
             final Brightness brightness = CustomTheme.of(context).brightness;
@@ -44,7 +48,6 @@ class MyApp extends StatelessWidget {
               ),
             );
           },
-          home: GalleryTabsPage(),
         ),
       );
 }

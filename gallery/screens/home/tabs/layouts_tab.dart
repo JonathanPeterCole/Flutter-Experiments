@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_experiments/widgets/navigation/custom_navigator.dart';
 
 import '../../demos/layout_demos/fading_sliver_app_bar_demo.dart';
 import '../../demos/layout_demos/fixed_bottom_sheet_demo.dart';
@@ -70,14 +71,9 @@ class LayoutsTab extends StatelessWidget {
             padding: const EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
           ),
           ListTile(
-            leading: const Icon(Icons.call_to_action_outlined),
-            title: const Text('Fixed Bottom Sheet With Buttons'),
-            onTap: () => Navigator.push<Widget>(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const FixedBottomSheetDemoScreen(),
-                )),
-          ),
+              leading: const Icon(Icons.call_to_action_outlined),
+              title: const Text('Fixed Bottom Sheet With Buttons'),
+              onTap: () => CustomNavigator.of(context).push(const FixedBottomSheetDemoScreen())),
         ],
       );
 }

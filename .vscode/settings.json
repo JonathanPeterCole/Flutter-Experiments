@@ -8,6 +8,9 @@
 	// Auto format line length to 100 characters.
 	"dart.lineLength": 100,
 
+	// Disable embeded DevTools due to missing features.
+	"dart.embedDevTools": false,
+
   // Causes the debug view to automatically appear when a breakpoint is hit. This
 	// setting is global and not configurable per-language.
   "debug.openDebug": "openOnDebugBreak",

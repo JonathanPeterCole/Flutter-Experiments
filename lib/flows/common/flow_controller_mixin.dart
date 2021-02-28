@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_experiments/widgets/navigation/custom_navigator.dart';
 
 /// A basic controller designed to allow for flow classes that control the navigation between
 /// reusable screens, without the screens themselves holding navigation logic for each of the
@@ -13,36 +14,38 @@ import 'package:flutter/widgets.dart';
 /// Known issues:
 /// - Popping a flow will animate out every route that has been pushed since the flow started,
 ///   which has a major performance hit. Ideally routes between the current route and the route
-///   we're popping to should be removed from the stack without animating.
+///   we're popping to should be removed from the stack without animating. - This is fixed with the
+///   WIP implementation of the Navigator Pages API.
 mixin FlowControllerMixin {
-  /// The route before the flow.
-  Route<dynamic>? _previousRoute;
+  // /// The route before the flow.
+  // Route<dynamic>? _previousRoute;
 
-  /// The first route of the flow.
-  Route<dynamic>? _firstRoute;
+  // /// The first route of the flow.
+  // Route<dynamic>? _firstRoute;
 
   /// Pushes the first page of the flow to the navigation stack.
   @protected
   void present(BuildContext context, Widget initialScreen) {
-    _previousRoute = ModalRoute.of(context);
-    _firstRoute = MaterialPageRoute<dynamic>(
-      builder: (context) => initialScreen,
-    );
-    Navigator.push<dynamic>(context, _firstRoute!);
+    // _previousRoute = ModalRoute.of(context);
+    // _firstRoute = MaterialPageRoute<dynamic>(
+    //   builder: (context) => initialScreen,
+    // );
+    // Navigator.push<dynamic>(context, _firstRoute!);
+    CustomNavigator.of(context).push(initialScreen);
   }
 
-  /// Pops to the page before the flow.
-  void popFlow(BuildContext context) =>
-      Navigator.popUntil(context, (route) => route == _previousRoute);
+  // /// Pops to the page before the flow.
+  // void popFlow(BuildContext context) =>
+  //     Navigator.popUntil(context, (route) => route == _previousRoute);
 
-  /// Pops to the first page in the flow.
-  void popToFlowRoot(BuildContext context) =>
-      Navigator.popUntil(context, (route) => route == _firstRoute);
+  // /// Pops to the first page in the flow.
+  // void popToFlowRoot(BuildContext context) =>
+  //     Navigator.popUntil(context, (route) => route == _firstRoute);
 
-  /// Replaces the flow with a new route.
-  @optionalTypeArgs
-  Future<T?> replaceFlow<T extends Object?, TO extends Object?>(
-          BuildContext context, Route<T> newRoute,
-          {TO? result}) =>
-      Navigator.pushAndRemoveUntil(context, newRoute, (route) => route == _previousRoute);
+  // /// Replaces the flow with a new route.
+  // @optionalTypeArgs
+  // Future<T?> replaceFlow<T extends Object?, TO extends Object?>(
+  //         BuildContext context, Route<T> newRoute,
+  //         {TO? result}) =>
+  //     Navigator.pushAndRemoveUntil(context, newRoute, (route) => route == _previousRoute);
 }

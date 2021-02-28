@@ -31,24 +31,25 @@
             ]
         },
         {
-            "name": "Debug: Gallery (Android)",
+            "name": "Debug: Gallery",
             "request": "launch",
             "type": "dart",
             "program": "gallery/main.dart",
             "args": [
                 "--dart-define",
-                "PLATFORM_OVERRIDE=android"
+                "PLATFORM_OVERRIDE=${input:platformOverride}"
             ]
         },
+    ],
+    "inputs": [
         {
-            "name": "Debug: Gallery (iOS)",
-            "request": "launch",
-            "type": "dart",
-            "program": "gallery/main.dart",
-            "args": [
-                "--dart-define",
-                "PLATFORM_OVERRIDE=ios"
-            ]
+            "id": "platformOverride",
+            "description": "The override platform",
+            "options": [
+                "android",
+                "ios"
+            ],
+            "type": "pickString"
         }
     ]
 }
