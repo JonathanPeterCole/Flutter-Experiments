@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_experiments/screens/home_screen.dart';
+import 'package:flutter_experiments/screens/home/home_screen.dart';
 import 'package:flutter_experiments/theme/custom_theme.dart';
 import 'package:flutter_experiments/theme/custom_theme_data.dart';
 import 'package:flutter_experiments/utils/environment/environment.dart';
+import 'package:flutter_experiments/widgets/navigation/custom_navigator.dart';
 
 Future<void> main() async {
   // Override the target platform on debug builds if a platform was specified
@@ -26,26 +27,29 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => CustomTheme(
-        child: MaterialApp(
-          title: 'Flutter Experiments',
-          theme: const CustomThemeData.light().materialTheme,
-          darkTheme: const CustomThemeData.dark().materialTheme,
-          builder: (context, child) {
-            // Get the platform brightness
-            final Brightness brightness = CustomTheme.of(context).brightness;
-            final Brightness inverseBrightness =
-                brightness == Brightness.light ? Brightness.dark : Brightness.light;
-            return AnnotatedRegion<SystemUiOverlayStyle>(
-              child: child!,
-              value: SystemUiOverlayStyle(
-                statusBarColor: Colors.transparent,
-                statusBarBrightness: brightness,
-                statusBarIconBrightness: inverseBrightness,
-              ),
-            );
-          },
-          home: const HomeScreen(title: 'Flutter Experiments'),
+  Widget build(BuildContext context) {
+    return CustomTheme(
+      child: MaterialApp(
+        title: 'Flutter Experiments',
+        theme: const CustomThemeData.light().materialTheme,
+        darkTheme: const CustomThemeData.dark().materialTheme,
+        home: CustomNavigator(
+          initialPages: [HomeScreen()],
         ),
-      );
+        builder: (context, child) {
+          // Get the platform brightness
+          final Brightness brightness = CustomTheme.of(context).brightness;
+          final Brightness inverseBrightness =
+              brightness == Brightness.light ? Brightness.dark : Brightness.light;
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            child: child!,
+            value: SystemUiOverlayStyle(
+              statusBarBrightness: brightness,
+              statusBarIconBrightness: inverseBrightness,
+            ),
+          );
+        },
+      ),
+    );
+  }
 }

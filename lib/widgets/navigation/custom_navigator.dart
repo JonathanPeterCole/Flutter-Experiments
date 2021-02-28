@@ -97,6 +97,7 @@ class CustomNavigatorState extends State<CustomNavigator> {
         child: HeroControllerScope(
           controller: _heroController,
           child: Navigator(
+            key: _navigatorKey,
             pages: pageStack.map((stackItem) => stackItem.toMaterialPage()).toList(),
             onPopPage: onPopPage,
           ),
