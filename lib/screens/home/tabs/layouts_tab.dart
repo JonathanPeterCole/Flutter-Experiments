@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_experiments/screens/demos/layout_demos/sticky_sticky_bottom_builder_demo.dart';
 import 'package:flutter_experiments/screens/demos/layout_demos/sticky_sticky_bottom_demo.dart';
 import 'package:flutter_experiments/widgets/navigation/custom_navigator.dart';
 
@@ -95,6 +96,16 @@ class LayoutsTab extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => SliverStickyBottomDemoScreen(),
+            ),
+          ),
+        ),
+        ListTile(
+          leading: const Icon(Icons.handyman),
+          title: const Text('Sliver Sticky Bottom Builder'),
+          onTap: () => Navigator.push<Widget>(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SliverStickyBottomBuilderDemoScreen(),
             ),
           ),
         ),
