@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_experiments/screens/demos/layout_demos/sticky_sticky_bottom_demo.dart';
 import 'package:flutter_experiments/widgets/navigation/custom_navigator.dart';
 
 import '../../demos/layout_demos/fading_sliver_app_bar_demo.dart';
@@ -32,10 +33,11 @@ class LayoutsTab extends StatelessWidget {
           leading: const Icon(Icons.link_off),
           title: const Text('Floating'),
           onTap: () => Navigator.push<Widget>(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const FadingSliverAppBarDemoScreen(pinned: false),
-              )),
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FadingSliverAppBarDemoScreen(pinned: false),
+            ),
+          ),
         ),
         const Divider(),
         Padding(
@@ -49,19 +51,21 @@ class LayoutsTab extends StatelessWidget {
           leading: const Icon(Icons.tab),
           title: const Text('Tabs'),
           onTap: () => Navigator.push<Widget>(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const PlatformTabBarDemoScreen(),
-              )),
+            context,
+            MaterialPageRoute(
+              builder: (context) => const PlatformTabBarDemoScreen(),
+            ),
+          ),
         ),
         ListTile(
           leading: const Icon(Icons.fast_forward_rounded),
           title: const Text('Scrolling Tabs'),
           onTap: () => Navigator.push<Widget>(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const PlatformTabBarDemoScreen(scrolling: true),
-              )),
+            context,
+            MaterialPageRoute(
+              builder: (context) => const PlatformTabBarDemoScreen(scrolling: true),
+            ),
+          ),
         ),
         const Divider(),
         Padding(
@@ -72,9 +76,28 @@ class LayoutsTab extends StatelessWidget {
           padding: const EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
         ),
         ListTile(
-            leading: const Icon(Icons.call_to_action_outlined),
-            title: const Text('Fixed Bottom Sheet With Buttons'),
-            onTap: () => CustomNavigator.of(context).push(const FixedBottomSheetDemoScreen())),
+          leading: const Icon(Icons.call_to_action_outlined),
+          title: const Text('Fixed Bottom Sheet With Buttons'),
+          onTap: () => CustomNavigator.of(context).push(const FixedBottomSheetDemoScreen()),
+        ),
+        const Divider(),
+        Padding(
+          child: Text(
+            'STICKY BOTTOM',
+            style: Theme.of(context).textTheme.overline,
+          ),
+          padding: const EdgeInsets.only(top: 12.0, right: 16.0, bottom: 8.0, left: 16.0),
+        ),
+        ListTile(
+          leading: const Icon(Icons.push_pin_sharp),
+          title: const Text('Sliver Sticky Bottom'),
+          onTap: () => Navigator.push<Widget>(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SliverStickyBottomDemoScreen(),
+            ),
+          ),
+        ),
       ],
     );
   }
