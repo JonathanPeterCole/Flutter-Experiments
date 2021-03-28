@@ -20,6 +20,10 @@
             "name": "Debug: Prod",
             "request": "launch",
             "type": "dart",
+            "args": [
+                "--dart-define",
+                "PLATFORM_OVERRIDE=${input:platformOverride}",
+            ]
         },
         {
             "name": "Debug: Local",
@@ -28,16 +32,8 @@
             "args": [
                 "--dart-define",
                 "API_URL=https://localhost:1000/",
-            ]
-        },
-        {
-            "name": "Debug: Gallery",
-            "request": "launch",
-            "type": "dart",
-            "program": "gallery/main.dart",
-            "args": [
                 "--dart-define",
-                "PLATFORM_OVERRIDE=${input:platformOverride}"
+                "PLATFORM_OVERRIDE=${input:platformOverride}",
             ]
         },
     ],
