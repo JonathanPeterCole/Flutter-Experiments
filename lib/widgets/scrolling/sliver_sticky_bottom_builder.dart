@@ -96,7 +96,7 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
   double get childExtent => child?.size.height ?? 0;
 
   /// Get the effective size of the bottom widget based on the current scroll offset.
-  double get bottomExtent {
+  double calculateBottomExtent() {
     // Get the maximum size of the sliver
     final double maxSliverExtent = childExtent + unstuckBottomExtent;
     // Get the offset for the bottom of the visible portion of the sliver
@@ -114,7 +114,7 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
   }
 
   /// Get the offset for the bottom widget based on the current scroll offset.
-  double get bottomOffset {
+  double calculateBottomOffset() {
     // Get the maximum and minimum offsets
     const double minOffset = 0;
     final double maxOffset = child!.size.height;
@@ -125,11 +125,30 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
     return bottomOffset.clamp(minOffset, maxOffset) - constraints.scrollOffset;
   }
 
+  /// Get the percentage offset of the distance the user has scrolled inside the sliver.
+  double calculateBottomScrollOffsetPercent() {
+    // Get the current scroll offset relative to the scroll view
+    final double scrollViewScrollOffset = constraints.precedingScrollExtent +
+        constraints.remainingPaintExtent +
+        constraints.scrollOffset;
+    // Get the point at which the scroll ofset percent should be 0 - This should always be the same
+    // or greater than the viewport height to prevent the offset being greater than zero before
+    // the user has started scrolling
+    final double scrollTop = math.max(
+        constraints.precedingScrollExtent + stuckBottomExtent, constraints.viewportMainAxisExtent);
+    // Get the point at which the scroll ofset percent should be 1
+    final double scrollBottom = constraints.precedingScrollExtent + childExtent + stuckBottomExtent;
+    // If the scroll bottom comes before the scroll top, return a full scroll offset percent
+    return scrollTop < scrollBottom
+        ? (scrollViewScrollOffset - scrollTop) / (scrollBottom - scrollTop)
+        : 1;
+  }
+
   /// Gets the position of the leading edge of a child relative to the current scroll offset.
   @override
   double childMainAxisPosition(RenderObject child) {
     if (child == this.child) return -constraints.scrollOffset;
-    if (child == bottom) return bottomOffset;
+    if (child == bottom) return calculateBottomOffset();
     return super.childMainAxisPosition(child);
   }
 
@@ -142,7 +161,7 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
   }) {
     // Determine which child should capture the hit test based on whether or not the tap position
     // was above the bottom widget
-    if (mainAxisPosition > bottomOffset) {
+    if (mainAxisPosition > calculateBottomOffset()) {
       return hitTestBoxChild(BoxHitTestResult.wrap(result), bottom!,
           mainAxisPosition: mainAxisPosition, crossAxisPosition: crossAxisPosition);
     } else {
@@ -156,15 +175,13 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
   void performLayout() {
     // Layout the child using the sliver's constraints
     child!.layout(constraints.asBoxConstraints(), parentUsesSize: true);
-    // Calculate the bottom size offset and scroll offset
+    // Get the bottom sizes and offset percentages
     final double minBottomExtent = math.min(unstuckBottomExtent, stuckBottomExtent);
     final double maxBottomExtent = math.max(unstuckBottomExtent, stuckBottomExtent);
-    final double effectiveBottomExtent = bottomExtent;
+    final double bottomExtent = calculateBottomExtent();
     final double bottomSizeOffsetPercent =
-        (effectiveBottomExtent - minBottomExtent) / (maxBottomExtent - minBottomExtent);
-    final double bottomScrollOffsetPercent =
-        (constraints.remainingPaintExtent + constraints.scrollOffset - stuckBottomExtent) /
-            childExtent;
+        (bottomExtent - minBottomExtent) / (maxBottomExtent - minBottomExtent);
+    final double bottomScrollOffsetPercent = calculateBottomScrollOffsetPercent();
     // Rebuild the bottom widget if necessary
     if (previousBottomSizeOffset != bottomSizeOffsetPercent ||
         previousBottomScrollOffset != bottomScrollOffsetPercent) {
@@ -177,8 +194,8 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
     }
     // Layout the bottom widget using the effective size based on the scroll position
     bottom!.layout(constraints.asBoxConstraints().copyWith(
-          minHeight: effectiveBottomExtent,
-          maxHeight: effectiveBottomExtent,
+          minHeight: bottomExtent,
+          maxHeight: bottomExtent,
         ));
     // Set the sliver geometry
     final double maxSliverExtent = childExtent + unstuckBottomExtent;
@@ -186,7 +203,7 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
       scrollExtent: maxSliverExtent,
       paintExtent: calculatePaintOffset(constraints, from: 0, to: maxSliverExtent),
       maxPaintExtent: maxSliverExtent,
-      hasVisualOverflow: false, // Conservatively say we do have overflow to avoid complexity.
+      hasVisualOverflow: false,
     );
   }
 
@@ -199,7 +216,7 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
   @override
   void paint(PaintingContext context, Offset offset) {
     context.paintChild(child!, offset + Offset(0, childMainAxisPosition(child!)));
-    context.paintChild(bottom!, offset + Offset(0, bottomOffset));
+    context.paintChild(bottom!, offset + Offset(0, calculateBottomOffset()));
   }
 
   @protected
