@@ -24,6 +24,7 @@ class SliverStickyBottomBuilder extends RenderObjectWidget {
     required this.bottomBuilder,
     required this.bottomExtent,
     required this.stuckBottomExtent,
+    this.clipBehavior = Clip.none,
   }) : super(key: key);
 
   /// The main widget to display.
@@ -41,6 +42,11 @@ class SliverStickyBottomBuilder extends RenderObjectWidget {
 
   /// The maximum size of the bottom widget when it's stuck to the bottom of the scroll view.
   final double stuckBottomExtent;
+
+  /// The clip behavior for the sliver.
+  ///
+  ///  This is useful if you don't want a shadow from the bottom widget overlaying the next sliver.
+  final Clip clipBehavior;
 
   @override
   SliverStickyBottomBuilderElement createElement() => SliverStickyBottomBuilderElement(this);
@@ -87,6 +93,8 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
     _bottom = value;
     if (_bottom != null) adoptChild(_bottom!);
   }
+
+  Clip get clipBehavior => element!.widget.clipBehavior;
 
   double get unstuckBottomExtent => element!.widget.bottomExtent;
 
@@ -212,9 +220,29 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
     applyPaintTransformForBoxChild(child as RenderBox, transform);
   }
 
-  /// Paints the child and bottom widgets.
+  /// Paints sliver with clipping if clipBehaviour isn't set to `Clip.none`.
   @override
   void paint(PaintingContext context, Offset offset) {
+    if (clipBehavior == Clip.none) {
+      paintChildren(context, offset);
+    } else {
+      // Not sure if this is the best way clip the sliver
+      final RRect rrect = BorderRadius.zero.toRRect(
+        Offset.zero & Size(constraints.crossAxisExtent, geometry!.paintExtent),
+      );
+      context.pushClipRRect(
+        needsCompositing,
+        offset,
+        rrect.outerRect,
+        rrect,
+        paintChildren,
+        clipBehavior: clipBehavior,
+      );
+    }
+  }
+
+  /// Paints the child and bottom widgets.
+  void paintChildren(PaintingContext context, Offset offset) {
     context.paintChild(child!, offset + Offset(0, childMainAxisPosition(child!)));
     context.paintChild(bottom!, offset + Offset(0, calculateBottomOffset()));
   }
