@@ -21,6 +21,7 @@ class SliverStickyBottomBuilder extends RenderObjectWidget {
   const SliverStickyBottomBuilder({
     Key? key,
     required this.child,
+    this.bottomChild,
     required this.bottomBuilder,
     required this.bottomExtent,
     required this.stuckBottomExtent,
@@ -30,12 +31,20 @@ class SliverStickyBottomBuilder extends RenderObjectWidget {
   /// The main widget to display.
   final Widget child;
 
+  /// An optional child widget to include in the bottom widget.
+  final Widget? bottomChild;
+
   /// Builds the bottom widget.
   ///
   /// * `sizeOffset` is the current offset between `bottomExtent` and `stuckBottomExtent` as a
   ///   percentage.
   /// * `scrollOffset` is the current scroll offset of the sliver as a percentage.
-  final Widget Function(BuildContext context, double sizeOffset, double scrollOffset) bottomBuilder;
+  final Widget Function(
+    BuildContext context,
+    double sizeOffset,
+    double scrollOffset,
+    Widget? child,
+  ) bottomBuilder;
 
   /// The size of the bottom widget when the user has reached the bottom or scrolled beyond it.
   final double bottomExtent;
@@ -183,12 +192,10 @@ class RenderSliverStickyBottomBuilder extends RenderSliver with RenderSliverHelp
   void performLayout() {
     // Layout the child using the sliver's constraints
     child!.layout(constraints.asBoxConstraints(), parentUsesSize: true);
-    // Get the bottom sizes and offset percentages
-    final double minBottomExtent = math.min(unstuckBottomExtent, stuckBottomExtent);
-    final double maxBottomExtent = math.max(unstuckBottomExtent, stuckBottomExtent);
+    // Get the bottom size and offset percentages
     final double bottomExtent = calculateBottomExtent();
     final double bottomSizeOffsetPercent =
-        (bottomExtent - minBottomExtent) / (maxBottomExtent - minBottomExtent);
+        (bottomExtent - unstuckBottomExtent) / (stuckBottomExtent - unstuckBottomExtent);
     final double bottomScrollOffsetPercent = calculateBottomScrollOffsetPercent();
     // Rebuild the bottom widget if necessary
     if (previousBottomSizeOffset != bottomSizeOffsetPercent ||
@@ -303,7 +310,7 @@ class SliverStickyBottomBuilderElement extends RenderObjectElement {
     owner!.buildScope(this, () {
       bottom = updateChild(
         bottom,
-        widget.bottomBuilder(this, sizeOffset, scrollOffset),
+        widget.bottomBuilder(this, sizeOffset, scrollOffset, widget.bottomChild),
         1,
       );
     });
@@ -328,6 +335,7 @@ class SliverStickyBottomBuilderElement extends RenderObjectElement {
   void update(SliverStickyBottomBuilder newWidget) {
     super.update(newWidget);
     child = updateChild(child, widget.child, 0);
+    renderObject.markNeedsLayout();
   }
 
   @override

@@ -28,7 +28,7 @@ class SliverStickyBottomBuilderDemoScreen extends StatelessWidget {
     );
   }
 
-  Widget buildBottom(BuildContext context, double sizeOffset, double scrollOffset) {
+  Widget buildBottom(BuildContext context, double sizeOffset, double scrollOffset, Widget? child) {
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom * sizeOffset),
       child: DemoCard(
